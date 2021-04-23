@@ -14,7 +14,7 @@ mathjax:
 	rsync -auv ${MATHJAX_SRC}/input/tex ${MATHJAX_DST}/input/
 	rsync -auv ${MATHJAX_SRC}/output/chtml ${MATHJAX_DST}/output/
 
-# wget -O- https://github.com/KaTeX/KaTeX/releases/download/v0.12.0/katex.tar.gz | tar xz
+# wget -O- https://github.com/KaTeX/KaTeX/releases/download/v0.13.2/katex.tar.gz | tar xz
 
 KATEX_SRC := katex
 KATEX_DST := ${STATIC_LIB}/katex
