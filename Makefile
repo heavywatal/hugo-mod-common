@@ -1,6 +1,6 @@
-.PHONY: all mathjax katex
+.PHONY: all install-mathjax install-katex
 
-all: mathjax katex
+all: install-mathjax install-katex
 	@:
 
 STATIC_LIB := static/lib
@@ -8,19 +8,24 @@ STATIC_LIB := static/lib
 MATHJAX_SRC := MathJax/es5
 MATHJAX_DST := ${STATIC_LIB}/mathjax
 
-mathjax:
+install-mathjax: | MathJax
+	@grep version MathJax/package.json
 	mkdir -p ${MATHJAX_DST}
 	rsync -auv ${MATHJAX_SRC}/tex-chtml.js ${MATHJAX_DST}/
 	rsync -auv ${MATHJAX_SRC}/input/tex ${MATHJAX_DST}/input/
 	rsync -auv ${MATHJAX_SRC}/output/chtml ${MATHJAX_DST}/output/
 
-# wget -O- https://github.com/KaTeX/KaTeX/releases/download/v0.13.2/katex.tar.gz | tar xz
+MathJax:
+	git submodule update --init --recursive
 
-KATEX_SRC := katex
 KATEX_DST := ${STATIC_LIB}/katex
 
-katex:
+install-katex: | katex
+	@grep 'version:' katex/katex.js
 	mkdir -p ${KATEX_DST}
-	rsync -auv ${KATEX_SRC}/katex.min.{css,js} ${KATEX_DST}/
-	rsync -auv ${KATEX_SRC}/fonts ${KATEX_DST}/
-	rsync -auv ${KATEX_SRC}/contrib/auto-render.min.js ${KATEX_DST}/contrib/
+	rsync -auv katex/katex.min.{css,js} ${KATEX_DST}/
+	rsync -auv katex/fonts ${KATEX_DST}/
+	rsync -auv katex/contrib/auto-render.min.js ${KATEX_DST}/contrib/
+
+katex:
+	wget -O- https://github.com/KaTeX/KaTeX/releases/download/v0.13.6/katex.tar.gz | tar xz
