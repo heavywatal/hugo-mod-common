@@ -24,7 +24,7 @@ install-katex: | katex
 	@grep 'version:' katex/katex.js
 	mkdir -p ${KATEX_DST}
 	rsync -auv katex/katex.min.{css,js} ${KATEX_DST}/
-	rsync -auv katex/fonts ${KATEX_DST}/
+	rsync -auv katex/fonts/*.woff2 ${KATEX_DST}/fonts/
 	rsync -auv katex/contrib/auto-render.min.js ${KATEX_DST}/contrib/
 
 katex:
