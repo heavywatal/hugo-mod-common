@@ -1,4 +1,5 @@
 .chroma {
+
   .n,
   .o,
   .p {
@@ -130,7 +131,43 @@
   }
 
   .ln {
-    margin-right: 0.4em;
-    padding: 0 0.4em;
+    margin-inline-end: 1em;
+  }
+
+  .ln,
+  .lnt {
+    user-select: none;
+    color: #8886;
+  }
+
+  .lnt,
+  .line {
+    display: block;
+  }
+
+  .lntd {
+    vertical-align: top;
+
+    &:first-child {
+      width: 2em;
+
+      pre {
+        box-shadow: none;
+      }
+    }
+  }
+
+  .lntd,
+  .lntable {
+    padding: 0;
+    margin: 0;
+    border: 0;
+    box-shadow: none;
+  }
+
+  .lntable {
+    width: 100%;
+    table-layout: fixed;
+    border-spacing: 0;
   }
 }
