@@ -28,4 +28,4 @@ install-katex: | katex
 	rsync -auv --delete katex/contrib/auto-render.min.js ${KATEX_DST}/contrib/
 
 katex:
-	curl -L https://github.com/KaTeX/KaTeX/releases/download/v0.16.10/katex.tar.gz | tar xz
+	curl -L https://github.com/KaTeX/KaTeX/releases/download/v0.16.11/katex.tar.gz | tar xz
