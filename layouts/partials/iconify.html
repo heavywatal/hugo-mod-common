@@ -1,0 +1,3 @@
+{{ with resources.Get "lib/iconify.js" | js.Build (dict "minify" true) -}}
+<script src="{{ .RelPermalink }}"></script>
+{{ end -}}

@@ -1,6 +1,6 @@
-.PHONY: all install-mathjax install-katex
+.PHONY: all install-mathjax install-katex iconify
 
-all: install-mathjax install-katex
+all: install-mathjax install-katex iconify
 	@:
 
 STATIC_LIB := static/lib
@@ -29,3 +29,12 @@ install-katex: | katex
 
 katex:
 	curl -L https://github.com/KaTeX/KaTeX/releases/download/v0.16.11/katex.tar.gz | tar xz
+
+ICONIFY_DST := assets/lib
+
+iconify: ${ICONIFY_DST}/iconify-icon.mjs
+	@:
+
+${ICONIFY_DST}/iconify-icon.mjs:
+	mkdir -p ${ICONIFY_DST}
+	curl -o $@ https://raw.githubusercontent.com/iconify/code/gh-pages/iconify-icon/2.1.0/iconify-icon.mjs
