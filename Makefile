@@ -3,6 +3,7 @@
 all: install-mathjax install-katex iconify
 	@:
 
+SRC_DIR := assets/src
 STATIC_LIB := static/lib
 
 MATHJAX_SRC := MathJax/es5
@@ -20,15 +21,14 @@ MathJax:
 
 KATEX_DST := ${STATIC_LIB}/katex
 
-install-katex: | katex
-	@grep 'version:' katex/katex.js
+install-katex: | ${SRC_DIR}/katex
+	@grep 'version:' ${SRC_DIR}/katex/katex.js
 	mkdir -p ${KATEX_DST}
-	rsync -auv --delete katex/katex.min.{css,js} ${KATEX_DST}/
-	rsync -auv --delete katex/fonts/*.woff2 ${KATEX_DST}/fonts/
-	rsync -auv --delete katex/contrib/auto-render.min.js ${KATEX_DST}/contrib/
+	rsync -auv --delete ${SRC_DIR}/katex/fonts/*.woff2 ${KATEX_DST}/fonts/
 
-katex:
-	curl -L https://github.com/KaTeX/KaTeX/releases/download/v0.16.11/katex.tar.gz | tar xz
+${SRC_DIR}/katex:
+	mkdir -p ${SRC_DIR}
+	curl -L https://github.com/KaTeX/KaTeX/releases/download/v0.16.11/katex.tar.gz | tar xz -C "${SRC_DIR}"
 
 ICONIFY_DST := assets/lib
 
