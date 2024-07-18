@@ -1,1 +1,6 @@
-/assets/src
+/assets/src/katex/*
+/assets/src/katex/contrib/*
+!/assets/src/katex/contrib/
+!/assets/src/katex/contrib/auto-render.mjs
+!/assets/src/katex/katex.css
+!/assets/src/katex/katex.mjs
