@@ -1,4 +1,4 @@
-import './iconify-icon.mjs';
+import '../src/iconify-icon.mjs';
 const rule = `
 iconify-icon {
   display: inline-block;

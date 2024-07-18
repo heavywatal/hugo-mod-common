@@ -30,11 +30,9 @@ ${SRC_DIR}/katex:
 	mkdir -p ${SRC_DIR}
 	curl -L https://github.com/KaTeX/KaTeX/releases/download/v0.16.11/katex.tar.gz | tar xz -C "${SRC_DIR}"
 
-ICONIFY_DST := assets/lib
-
-iconify: ${ICONIFY_DST}/iconify-icon.mjs
+iconify: ${SRC_DIR}/iconify-icon.mjs
 	@:
 
-${ICONIFY_DST}/iconify-icon.mjs:
-	mkdir -p ${ICONIFY_DST}
+${SRC_DIR}/iconify-icon.mjs:
+	mkdir -p ${SRC_DIR}
 	curl -o $@ https://raw.githubusercontent.com/iconify/code/gh-pages/iconify-icon/2.1.0/iconify-icon.mjs
