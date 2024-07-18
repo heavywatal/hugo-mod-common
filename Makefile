@@ -29,7 +29,7 @@ ${SRC_DIR}/katex:
 	curl -L https://github.com/KaTeX/KaTeX/releases/download/v0.16.11/katex.tar.gz | tar xz -C "${SRC_DIR}"
 
 iconify: ${SRC_DIR}/iconify-icon.mjs
-	@:
+	@grep @version $<
 
 ${SRC_DIR}/iconify-icon.mjs:
 	curl -o $@ https://raw.githubusercontent.com/iconify/code/gh-pages/iconify-icon/2.1.0/iconify-icon.mjs
