@@ -1,0 +1,37 @@
+$beak-size: 0.5em;
+
+.bubble {
+  position: relative;
+  font-size: 0.92em;
+  padding: 0.2em 0.4em;
+  border-radius: 0.2em;
+  background: #9996;
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -$beak-size;
+    height: $beak-size;
+    aspect-ratio: 1;
+    clip-path: polygon(0 0, 100% 0, 0 100%);
+    background: #9996;
+  }
+
+  &[class~=flipY]::after {
+    bottom: unset;
+    top: -$beak-size;
+    transform: scaleY(-1);
+  }
+
+  &[class~=flipX]::after {
+    transform: translateX(-$beak-size) scaleX(-1);
+  }
+
+  &[class~=left20]::after { left: 20%; }
+  &[class~=left30]::after { left: 30%; }
+  &[class~=left40]::after { left: 40%; }
+  &[class~=left60]::after { left: 60%; }
+  &[class~=left70]::after { left: 70%; }
+  &[class~=left80]::after { left: 80%; }
+}
