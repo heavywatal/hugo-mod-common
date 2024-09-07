@@ -2,7 +2,7 @@
   "transpiler" "dartsass"
   "outputStyle" "compressed"
 ) -}}
-{{ with resources.Get "lib/katex/katex.min.scss" | resources.ToCSS $options -}}
+{{ with resources.Get "lib/katex/katex.min.scss" | toCSS $options -}}
 <link rel="stylesheet" href="{{ .RelPermalink }}">
 {{ end -}}
 {{ with resources.Get "lib/katex/katex.min.js" | js.Build (dict "minify" true) -}}
