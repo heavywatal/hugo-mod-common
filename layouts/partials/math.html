@@ -1,0 +1,5 @@
+{{ if eq ($.Param "math") "mathjax" -}}
+{{ partialCached "mathjax.html" . -}}
+{{ else -}}
+{{ partialCached "katex.html" . -}}
+{{ end -}}
