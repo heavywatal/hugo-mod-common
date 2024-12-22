@@ -9,15 +9,15 @@ STATIC_LIB := static/lib
 MATHJAX_SRC := ${SRC_DIR}/MathJax
 MATHJAX_OUTPUT := ${STATIC_LIB}/mathjax/output
 
-install-mathjax: | ${SRC_DIR}/tex-chtml.js ${MATHJAX_OUTPUT}/chtml
+install-mathjax: | ${SRC_DIR}/tex-chtml.js ${MATHJAX_OUTPUT}
 	grep version ${MATHJAX_SRC}/package.json
 
 ${SRC_DIR}/tex-chtml.js: | ${MATHJAX_SRC}
 	cp -p ${MATHJAX_SRC}/es5/tex-chtml.js $@
 
-${MATHJAX_OUTPUT}/chtml: | ${MATHJAX_SRC}
-	mkdir -p ${MATHJAX_OUTPUT}
-	rsync -auv --delete ${MATHJAX_SRC}/es5/output/chtml ${MATHJAX_OUTPUT}
+${MATHJAX_OUTPUT}: | ${MATHJAX_SRC}
+	mkdir -p $@
+	rsync -auv --delete ${MATHJAX_SRC}/es5/output/chtml $@
 
 ${MATHJAX_SRC}:
 	git submodule update --init --recursive
