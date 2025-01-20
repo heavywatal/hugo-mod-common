@@ -38,4 +38,4 @@ iconify: ${SRC_DIR}/iconify-icon.mjs
 	grep @version $<
 
 ${SRC_DIR}/iconify-icon.mjs:
-	curl -o $@ https://raw.githubusercontent.com/iconify/code/gh-pages/iconify-icon/2.2.0/iconify-icon.mjs
+	curl -o $@ https://raw.githubusercontent.com/iconify/code/gh-pages/iconify-icon/2.3.0/iconify-icon.mjs
