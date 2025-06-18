@@ -7,7 +7,7 @@
 * Licensed under MIT.
 *
 * @license MIT
-* @version 2.3.0
+* @version 3.0.0
 */
 const defaultIconDimensions = Object.freeze(
   {
@@ -427,7 +427,6 @@ function addCollection$1(data, provider) {
   }
   const prefix = data.prefix;
   if (!validateIconName({
-    provider,
     prefix,
     name: "a"
   })) {
@@ -1679,16 +1678,7 @@ function exportFunctions() {
         listAPIProviders,
     };
     return {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        enableCache: (storage) => {
-            // No longer used
-        },
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        disableCache: (storage) => {
-            // No longer used
-        },
         iconLoaded: iconLoaded$1,
-        iconExists: iconLoaded$1, // deprecated, kept to avoid breaking changes
         getIcon: getIcon$1,
         listIcons: listIcons$1,
         addIcon: addIcon$1,
@@ -2299,7 +2289,6 @@ const IconifyIconComponent = defineIconifyIcon() || exportFunctions();
 /**
  * Export functions
  */
-const { enableCache, disableCache, iconLoaded, iconExists, // deprecated, kept to avoid breaking changes
-getIcon, listIcons, addIcon, addCollection, calculateSize, buildIcon, iconToHTML, svgToURL, loadIcons, loadIcon, setCustomIconLoader, setCustomIconsLoader, addAPIProvider, _api, } = IconifyIconComponent;
+const { iconLoaded, getIcon, listIcons, addIcon, addCollection, calculateSize, buildIcon, iconToHTML, svgToURL, loadIcons, loadIcon, setCustomIconLoader, setCustomIconsLoader, addAPIProvider, _api, } = IconifyIconComponent;
 
-export { IconifyIconComponent, _api, addAPIProvider, addCollection, addIcon, appendCustomStyle, buildIcon, calculateSize, disableCache, enableCache, getIcon, iconExists, iconLoaded, iconToHTML, listIcons, loadIcon, loadIcons, setCustomIconLoader, setCustomIconsLoader, svgToURL };
+export { IconifyIconComponent, _api, addAPIProvider, addCollection, addIcon, appendCustomStyle, buildIcon, calculateSize, getIcon, iconLoaded, iconToHTML, listIcons, loadIcon, loadIcons, setCustomIconLoader, setCustomIconsLoader, svgToURL };
