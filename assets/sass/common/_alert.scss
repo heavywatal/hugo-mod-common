@@ -1,0 +1,28 @@
+@use "base";
+
+@mixin markdown-alert-base($color) {
+  background-color: color-mix(in srgb, $color, transparent 96%);
+  border-color: $color;
+  .markdown-alert-title {
+    color: $color;
+  }
+}
+
+.markdown-alert {
+  @extend %blockquote;
+  &-note {
+    @include markdown-alert-base(#0969da);
+  }
+  &-tip {
+    @include markdown-alert-base(#1a7f37);
+  }
+  &-important {
+    @include markdown-alert-base(#8250df);
+  }
+  &-warning {
+    @include markdown-alert-base(#9a6700);
+  }
+  &-caution {
+    @include markdown-alert-base(#d1242f);
+  }
+}

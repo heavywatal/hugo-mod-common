@@ -1,0 +1,9 @@
+%blockquote {
+  overflow: auto;
+  border-inline-start: 0.2em solid rgb(128 128 128 / 0.5);
+  margin: 0.5em 0;
+  padding-inline: 1em;
+  p {
+    margin: 0.5em 0;
+  }
+}

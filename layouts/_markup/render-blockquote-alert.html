@@ -1,0 +1,12 @@
+{{ if or .AlertSign .AlertTitle -}}
+<blockquote>
+<p>[!{{ .AlertType }}]{{ .AlertSign }} {{ .AlertTitle }}</p>
+{{ .Text }}</blockquote>
+{{ else -}}
+<div class="markdown-alert markdown-alert-{{ .AlertType }}">
+<p class="markdown-alert-title">
+{{ strings.FirstUpper .AlertType }}{{ with .AlertTitle }}: {{ . }}{{ end }}
+</p>
+{{ .Text }}
+</div>
+{{ end -}}
