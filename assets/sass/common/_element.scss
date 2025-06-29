@@ -1,0 +1,15 @@
+@use "_impl/blockquote";
+
+blockquote {
+  @extend %blockquote;
+  padding-inline-start: 2.4em;
+
+  &::before {
+    content: "“";
+    color: rgb(128 128 128 / 0.5);
+    font-family: serif;
+    font-size: 2em;
+    margin: 0 -1.6rem -4rem;
+    float: left;
+  }
+}
