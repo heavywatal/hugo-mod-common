@@ -1,0 +1,40 @@
+:root {
+  --serif: "Palatino", "Palatino Linotype", serif;
+  --sans-serif: "Segoe UI", "Yu Gothic-", system-ui, "Hiragino Sans-", sans-serif;
+  --monospace: "Menlo", "Consolas", "Hiragino Sans", "Yu Gothic-", monospace;
+}
+
+@mixin hiragino-sans($weight, $wx) {
+  @font-face {
+    font-family: "Hiragino Sans-";
+    font-weight: $weight;
+    size-adjust: 92.3%;
+    src:
+      local("HiraginoSans-#{$wx}"),
+      local("Hiragino Sans #{$wx}");
+  }
+}
+
+@mixin yu-gothic($weight, $suffix) {
+  @font-face {
+    font-family: "Yu Gothic-";
+    font-weight: $weight;
+    size-adjust: 92.3%;
+    src: local("Yu Gothic #{$suffix}");
+  }
+}
+
+@include hiragino-sans(100, "W0");
+@include hiragino-sans(200, "W1");
+@include hiragino-sans(300, "W2");
+@include hiragino-sans(400, "W3");
+@include hiragino-sans(500, "W4");
+@include hiragino-sans(600, "W5");
+@include hiragino-sans(700, "W6");
+@include hiragino-sans(800, "W7");
+@include hiragino-sans(900, "W8");
+
+@include yu-gothic(100, "Light");
+@include yu-gothic(200, "Regular");
+@include yu-gothic(400, "Medium");
+@include yu-gothic(700, "Bold");

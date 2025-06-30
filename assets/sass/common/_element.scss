@@ -1,4 +1,35 @@
+@forward "_impl/font";
 @use "_impl/blockquote";
+@use "color";
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--canvas-text);
+  font-family: var(--sans-serif);
+}
+
+a {
+  color: var(--link-text);
+  text-decoration: none;
+  &:hover {
+    color: hsl(from var(--link-text) h calc(1.5 * s) l);
+    text-decoration: underline;
+  }
+}
+
+code, pre {
+  font-family: var(--monospace);
+}
 
 blockquote {
   @extend %blockquote;
@@ -12,4 +43,16 @@ blockquote {
     margin: 0 -1.6rem -4rem;
     float: left;
   }
+}
+
+kbd {
+  font-family: var(--sans-serif);
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 0.75em;
+  padding: 0.04em 0.24em;
+  margin: -0.16em 0.08em 0 0.04em;
+  box-shadow: 0.04em 0.06em 0.1em var(--canvas-text);
+  border: solid 0.06em rgb(128 128 128 / 0.5);
+  border-radius: 0.18em;
 }
