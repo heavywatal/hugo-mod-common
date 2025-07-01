@@ -1,6 +1,8 @@
 :root {
-  --background-color: rgb(200 200 200 / 0.25);
+  $link-hue: 220deg;
+  $text-lightness: 27%;
+  --background-color: hsl(#{$link-hue} 0% 75% / 25%);
   --canvas: #fff;
-  --canvas-text: #444;
-  --link-text: #0042ab;
+  --canvas-text: hsl(#{$link-hue} 0% #{$text-lightness});
+  --link-text: hsl(#{$link-hue} 100% #{$text-lightness});
 }
