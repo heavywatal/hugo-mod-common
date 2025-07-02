@@ -10,6 +10,9 @@
 
 html {
   box-sizing: border-box;
+  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 body {
@@ -120,6 +123,17 @@ blockquote {
     margin: 0 -1.6rem -4rem;
     float: left;
   }
+}
+
+table {
+  border-spacing: 1em 0.4em;
+  border-block: 0.05em solid hsl(0deg 0% 55% / 55%);
+}
+
+th {
+  padding-bottom: 0.3em;
+  border-bottom: 0.1em solid hsl(0deg 0% 55% / 55%);
+  text-align: start;
 }
 
 kbd {
