@@ -27,6 +27,53 @@ a {
   }
 }
 
+ul, ol {
+  padding-inline-start: 1.8em;
+  margin-block: 0.5em;
+  li & {
+    margin-block: 0;
+  }
+}
+
+ul:has(li > input[type="checkbox"]) {
+  list-style-type: none;
+  padding-inline-start: 0.3em;
+  ul {
+    padding-inline-start: 1.8em;
+  }
+}
+
+li {
+  margin-block: 0.25em;
+  li, p {
+    margin-block: 0.2em;
+  }
+}
+
+dl {
+  margin-block: 0.5em;
+}
+
+dt {
+  font-weight: bold;
+  margin-block: 0.5em 0;
+}
+
+dd {
+  margin-block: 0.1em;
+  margin-inline-start: 1em;
+  position: relative;
+  p {
+    margin-block: 0.1em;
+  }
+  &::before {
+    content: ":";
+    position: absolute;
+    left: -0.9em;
+    opacity: 0.3;
+  }
+}
+
 code, pre {
   font-family: var(--monospace);
 }
