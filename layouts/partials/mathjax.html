@@ -1,3 +1,7 @@
-{{ with resources.Get "lib/mathjax/tex-chtml.js" | js.Build (dict "minify" true) -}}
-<script src="{{ .RelPermalink }}"></script>
+{{ $js_options := (dict
+  "format" "esm"
+  "minify" true
+) -}}
+{{ with resources.Get "lib/mathjax/tex-chtml.js" | js.Build $js_options -}}
+<script type="module" src="{{ .RelPermalink }}"></script>
 {{ end -}}

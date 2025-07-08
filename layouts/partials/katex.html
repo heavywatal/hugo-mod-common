@@ -1,10 +1,14 @@
-{{ $options := (dict
+{{ $css_options := (dict
   "transpiler" "dartsass"
   "outputStyle" "compressed"
 ) -}}
-{{ with resources.Get "lib/katex/katex.min.scss" | toCSS $options -}}
+{{ with resources.Get "lib/katex/katex.min.scss" | css.Sass $css_options -}}
 <link rel="stylesheet" href="{{ .RelPermalink }}">
 {{ end -}}
-{{ with resources.Get "lib/katex/katex.min.js" | js.Build (dict "minify" true) -}}
-<script src="{{ .RelPermalink }}"></script>
+{{ $js_options := (dict
+  "format" "esm"
+  "minify" true
+) -}}
+{{ with resources.Get "lib/katex/katex.min.js" | js.Build $js_options -}}
+<script type="module" src="{{ .RelPermalink }}"></script>
 {{ end -}}
