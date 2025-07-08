@@ -10,7 +10,7 @@ window.MathJax = {
     tags: 'ams'
   },
   chtml: {
-    scale: 1.06,
+    scale: 1.03,
     displayAlign: 'left',
     displayIndent: '2em',
     matchFontHeight: false
