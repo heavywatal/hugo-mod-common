@@ -8,6 +8,10 @@
   }
 }
 
+.markdown-alert-title {
+  font-weight: 500;
+}
+
 .markdown-alert {
   @extend %blockquote;
   &-note {

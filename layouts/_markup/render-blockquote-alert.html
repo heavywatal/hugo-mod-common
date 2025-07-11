@@ -4,9 +4,25 @@
 {{ .Text }}</blockquote>
 {{ else -}}
 <div class="markdown-alert markdown-alert-{{ .AlertType }}">
-<p class="markdown-alert-title">
-{{ strings.FirstUpper .AlertType }}{{ with .AlertTitle }}: {{ . }}{{ end }}
+<p class="markdown-alert-title">{{ partial "iconify-alert.html" .AlertType -}}
+{{ strings.FirstUpper .AlertType }}{{ with .AlertTitle }}: {{ . }}{{ end -}}
 </p>
 {{ .Text }}
 </div>
+{{ end -}}
+
+{{ define "_partials/iconify-alert.html" -}}
+  {{ $icon := "" -}}
+  {{ if eq . "note" -}}
+    {{ $icon = "octicon:info-16" -}}
+  {{ else if eq . "tip" -}}
+    {{ $icon = "octicon:light-bulb-16" -}}
+  {{ else if eq . "important" -}}
+    {{ $icon = "octicon:report-16" -}}
+  {{ else if eq . "warning" -}}
+    {{ $icon = "octicon:alert-16" -}}
+  {{ else if eq . "caution" -}}
+    {{ $icon = "octicon:stop-16" -}}
+  {{ end -}}
+{{ with $icon }}<iconify-icon inline {{ printf "icon=%q" . | safeHTMLAttr }}></iconify-icon>{{ end -}}
 {{ end -}}

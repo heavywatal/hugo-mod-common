@@ -15,4 +15,8 @@ iconify-icon {
   &[inline] {
     vertical-align: -0.125em;
   }
+
+  .markdown-alert-title > & {
+    margin-inline-end: 0.5em;
+  }
 }
