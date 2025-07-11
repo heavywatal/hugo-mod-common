@@ -4,3 +4,4 @@ min = "0.114.0"
 
 [params]
 math = "katex"
+iconify = true

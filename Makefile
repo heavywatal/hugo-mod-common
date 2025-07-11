@@ -34,8 +34,11 @@ ${KATEX_DST}/fonts: | ${SRC_DIR}/katex/fonts
 ${SRC_DIR}/katex/fonts:
 	curl -L https://github.com/KaTeX/KaTeX/releases/download/v0.16.22/katex.tar.gz | tar xz -C "${SRC_DIR}"
 
-iconify: ${SRC_DIR}/iconify-icon.mjs
+iconify: ${SRC_DIR}/iconify-icon.mjs iconify-css
 	grep @version $<
+
+iconify-css:
+	python -m wtl.iconify -v -o ${SRC_DIR}/iconify _utils/iconify.toml
 
 ${SRC_DIR}/iconify-icon.mjs:
 	curl -o $@ https://raw.githubusercontent.com/iconify/code/gh-pages/iconify-icon/3.0.0/iconify-icon.mjs

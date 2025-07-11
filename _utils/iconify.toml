@@ -1,0 +1,25 @@
+[[sets]]
+prefix = "bi"
+icons = [
+  "apple",
+  "bluesky",
+  "facebook",
+  "gift",
+  "git",
+  "github",
+  "gitlab",
+  "slack",
+  "ubuntu",
+  "windows",
+]
+
+[[sets]]
+prefix = "octicon"
+icons = [
+  "alert-16",
+  "copilot-16",
+  "info-16",
+  "light-bulb-16",
+  "report-16",
+  "stop-16",
+]

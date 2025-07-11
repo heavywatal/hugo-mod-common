@@ -1,7 +1,17 @@
+{{ if eq (.Param "iconify") "js" -}}
 {{ $js_options := (dict
   "format" "esm"
   "minify" true
 ) -}}
 {{ with resources.Get "lib/iconify.js" | js.Build $js_options -}}
 <script type="module" src="{{ .RelPermalink }}"></script>
+{{ end -}}
+{{ else if .Param "iconify" -}}
+{{ $css_options := (dict
+  "transpiler" "dartsass"
+  "outputStyle" "compressed"
+) -}}
+{{ with resources.Get "lib/iconify.scss" | css.Sass $css_options -}}
+<link rel="stylesheet" href="{{ .RelPermalink }}">
+{{ end -}}
 {{ end -}}

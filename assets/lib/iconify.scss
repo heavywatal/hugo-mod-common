@@ -1,0 +1,18 @@
+@forward "../src/iconify";
+
+iconify-icon {
+  display: inline-block;
+  min-width: 1em;
+  min-height: 1em;
+  background-color: currentColor;
+  -webkit-mask-image: var(--svg);
+  mask-image: var(--svg);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+
+  &[inline] {
+    vertical-align: -0.125em;
+  }
+}
