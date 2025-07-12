@@ -1,10 +1,8 @@
 <meta property="og:title" content="{{ .Title }}{{ with .Params.subtitle }}: {{ . }}{{ end }}">
 <meta property="og:type" content="{{ if .IsHome }}website{{ else }}article{{ end }}">
 <meta property="og:url" content="{{ .Permalink }}">
-{{ with partial "_funcs/get-page-images" . -}}
-{{ range . | first 6 -}}
-<meta property="og:image" content="{{ .Permalink }}">
-{{ end -}}
+{{ range .Param "images" -}}
+<meta property="og:image" content="{{ urls.AbsURL . }}">
 {{ end -}}
 <meta property="og:description" content="{{ .Description }}">
 <meta property="og:site_name" content="{{ .Site.Title }}">
