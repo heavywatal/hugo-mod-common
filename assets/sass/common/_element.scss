@@ -38,18 +38,21 @@ ul, ol {
   }
 }
 
-ul:has(li > input[type="checkbox"]) {
-  list-style-type: none;
-  padding-inline-start: 0.3em;
-  ul {
-    padding-inline-start: 1.8em;
-  }
-}
-
 li {
   margin-block: 0.25em;
   li, p {
     margin-block: 0.2em;
+  }
+}
+
+input[type="checkbox"] {
+  ul:has(> li > &),
+  ul:has(> li > p > &) {
+    list-style-type: none;
+  }
+  ul > li > &,
+  ul > li > p > & {
+    margin-inline-start: -1.5em;
   }
 }
 
@@ -126,8 +129,11 @@ blockquote {
 }
 
 table {
-  border-spacing: 1em 0.4em;
-  border-block: 0.05em solid hsl(0deg 0% 55% / 55%);
+  border-spacing: 0.4em;
+}
+
+th, td {
+  padding-inline: 0.4em;
 }
 
 th {
