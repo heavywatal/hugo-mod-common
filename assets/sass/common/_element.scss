@@ -88,6 +88,7 @@ code, pre {
   font-size: 0.85em;
   padding: 0.1em 0.2em;
   background-color: hsl(0deg 0% 60% / 10%);
+  white-space: pre-wrap;
 }
 
 pre {
@@ -152,4 +153,8 @@ kbd {
   box-shadow: 0.04em 0.06em 0.1em var(--canvas-text);
   border: solid 0.06em hsl(0deg 0% 55% / 55%);
   border-radius: 0.18em;
+}
+
+sub, sup {
+  line-height: 1;
 }
