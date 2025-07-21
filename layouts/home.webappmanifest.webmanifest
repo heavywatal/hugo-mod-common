@@ -1,0 +1,24 @@
+{
+  "name": "{{ site.Title }}",
+  "short_name": "{{ site.Title }}",
+  "start_url": "{{ relURL "." }}",
+{{- with site.Params.theme_color }}
+  "theme_color": "{{ . }}",
+{{- end }}
+{{- with site.Params.background_color }}
+  "background_color": "{{ . }}",
+{{- end }}
+{{- with resources.Get "icon-192.png" }}
+  "icons": [
+    {
+      "src": "{{ relURL "icon-192.png" }}",
+      "sizes": "192x192"
+    },
+    {
+      "src": "{{ relURL "icon-512.png" }}",
+      "sizes": "512x512"
+    }
+  ],
+{{- end }}
+  "display": "standalone"
+}

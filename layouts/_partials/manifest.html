@@ -1,0 +1,5 @@
+{{ $href := "/manifest.webmanifest" -}}
+{{ with site.Home.OutputFormats.Get "webappmanifest" -}}
+{{ $href = .RelPermalink -}}
+{{ end -}}
+<link rel="manifest" href="{{ $href }}">

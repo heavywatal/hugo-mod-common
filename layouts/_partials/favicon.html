@@ -1,0 +1,12 @@
+{{ with or .Site.Params.favicon "favicon.svg" -}}
+{{ $href := path.Join "/" . -}}
+{{ with resources.Get . -}}
+{{ $href = .RelPermalink -}}
+{{ end -}}
+<link rel="icon" href="{{ $href }}">
+{{ end -}}
+{{ $href := "/apple-touch-icon.png" -}}
+{{ with $href | path.Base | resources.Get -}}
+{{ $href = .RelPermalink -}}
+{{ end -}}
+<link rel="apple-touch-icon" href="{{ $href }}" sizes="180x180">
