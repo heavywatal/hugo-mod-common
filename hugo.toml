@@ -2,6 +2,9 @@
 max = "0.199.0"
 min = "0.146.0"
 
+[markup.highlight]
+noClasses = false
+
 [params]
 math = "katex"
 iconify = true
