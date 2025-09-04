@@ -1,151 +1,168 @@
-.chroma {
+// https://github.com/alecthomas/chroma/blob/master/types.go
+.chroma, .code-inline {
 
-  .n,
-  .o,
-  .p {
-    opacity: 0.95;
-  }
-
-  /* Keyword */
-  .k,
-  .kd,
-  .kn,
-  .kp,
-  .kr,
-  .kt,
-  .ow {
+  .k,  // Keyword
+  .kd, // KeywordDeclaration
+  .kn, // KeywordNamespace
+  .kp, // KeywordPseudo
+  .kr, // KeywordReserved
+  .kt, // KeywordType
+  .ow  // OperatorWord
+  {
     color: #56B4E9;
   }
 
-  /* Constant, Type, NameSpace */
-  .kc,
-  .no,
-  .nd,
-  .ni,
-  .nn {
+  .kc, // KeywordConstant
+  .no, // NameConstant
+  .nd, // NameDecorator
+  .ni, // NameEntity
+  .nn  // NameNamespace
+  {
     color: #0072B2;
   }
 
-  /* Builtin, Exception, Label, Tag */
-  .nb,
-  .bp,
-  .ne,
-  .nl,
-  .nt {
+  .nb, // NameBuiltin
+  .bp, // NameBuiltinPseudo
+  .ne, // NameException
+  .py, // NameProperty
+  .nl, // NameLabel
+  .nt  // NameTag
+  {
     color: #009E73;
   }
 
-  /* Variable */
-  .na,
-  .nx,
-  .nv,
-  .vc,
-  .vg,
-  .vi,
-  .vm {
-    color: #D55E00;
-  }
-
-
-  /* Class, Function */
-  .nc,
-  .nf,
-  .fm {
+  .nc, // NameClass
+  .nf, // NameFunction
+  .fm  // NameFunctionMagic
+  {
     color: #E69F00;
   }
 
-  /* LiteralNumber */
-  .m,
-  .mb,
-  .mf,
-  .mh,
-  .mi,
-  .il,
-  .mo {
+  .na, // NameAttribute
+  .nx, // NameOther
+  .nv, // NameVariable
+  .vc, // NameVariableClass
+  .vg, // NameVariableGlobal
+  .vi, // NameVariableInstance
+  .vm, // NameVariableMagic
+  .si  // StringInterpol
+  {
+    color: #D55E00;
+  }
+
+  .l,  // Literal
+  .ld, // LiteralDate
+  .s,  // String
+  .sa, // StringAffix
+  .sb, // StringBacktick
+  .sc, // StringChar
+  .dl, // StringDelimiter
+  .sd, // StringDoc
+  .s2, // StringDouble
+  .se, // StringEscape
+  .sh, // StringHeredoc
+  .sx, // StringOther
+  .sr, // StringRegex
+  .s1, // StringSingle
+  .ss  // StringSymbol
+  {
     color: #CC79A7;
   }
 
-  /* LiteralString */
-  .s,
-  .sa,
-  .sb,
-  .sc,
-  .dl,
-  .sd,
-  .s2,
-  .se,
-  .sh,
-  .si,
-  .sx,
-  .sr,
-  .s1,
-  .ss {
+  .m,  // Number
+  .mb, // NumberBin
+  .mf, // NumberFloat
+  .mh, // NumberHex
+  .mi, // NumberInteger
+  .il, // NumberIntegerLong
+  .mo  // NumberOct
+  {
     color: #CC79A7;
   }
 
-  /* Comment */
-  .c,
-  .ch,
-  .cm,
-  .c1,
-  .cs,
-  .cp,
-  .cpf {
+  .n,  // Name
+  .o,  // Operator
+  .p   // Punctuation
+  {
+    opacity: 0.95;
+  }
+
+  .c,  // Comment
+  .ch, // CommentHashbang
+  .cm, // CommentMultiline
+  .cp, // CommentPreproc
+  .cpf,// CommentPreprocFile
+  .c1, // CommentSingle
+  .cs, // CommentSpecial
+  .si  // StringInterpol
+  {
     opacity: 0.66;
   }
 
-  .ge {
+  .g,  // Generic
+  .ge, // GenericEmph
+  .gr, // GenericError
+  .go, // GenericOutput
+  .gp, // GenericPrompt
+  .gt  // GenericTraceback
+  {
     font-style: italic;
   }
 
-  .gh,
-  .gu,
-  .gs {
+  .gh, // GenericHeading
+  .gu, // GenericSubheading
+  .gs  // GenericStrong
+  {
     font-weight: bold;
   }
 
-  .gl {
-    text-decoration: underline
-  }
-
-  .gi {
-    background-color: #0f02;
-  }
-
-  .gd {
+  .err,// Error
+  .gd  // GenericDeleted
+  {
     background-color: #f002;
   }
 
-  .hl {
+  .gi  // GenericInserted
+  {
+    background-color: #0f02;
+  }
+
+  .gl  // GenericUnderline
+  {
+    text-decoration: underline
+  }
+
+  .hl  // LineHighlight
+  {
     background-color: #ff03;
   }
 
-  .gr,
-  .go,
-  .gp,
-  .gt,
-  .err,
-  .w,
-  .x {
-    font-style: italic;
+  .w,  // Whitespace
+  .x   // Other
+  {
+    background-color: #00f3;
   }
 
-  .ln {
+  .ln  // LineNumber
+  {
     margin-inline-end: 1em;
   }
 
-  .ln,
-  .lnt {
+  .ln, // LineNumbers
+  .lnt // LineNumbersTable
+  {
     user-select: none;
-    color: #8886;
+    opacity: 0.6;
   }
 
-  .lnt,
-  .line {
+  .lnt, // LineNumbersTable
+  .line // Line
+  {
     display: block;
   }
 
-  .lntd {
+  .lntd // LineTableID
+  {
     vertical-align: top;
 
     &:first-child {
@@ -157,15 +174,16 @@
     }
   }
 
-  .lntd,
-  .lntable {
+  .lntd, // LineTableID
+  .lntable // LineTable
+  {
     padding: 0;
     margin: 0;
     border: 0;
-    box-shadow: none;
   }
 
-  .lntable {
+  .lntable // LineTable
+  {
     width: 100%;
     table-layout: fixed;
     border-spacing: 0;
