@@ -45,6 +45,10 @@ li {
   }
 }
 
+input[type="search"] {
+  border-radius: 0; // Override iOS style
+}
+
 input[type="checkbox"] {
   ul:has(> li > &),
   ul:has(> li > p > &) {
