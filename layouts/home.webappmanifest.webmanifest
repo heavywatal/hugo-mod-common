@@ -8,17 +8,15 @@
 {{- with site.Params.background_color }}
   "background_color": "{{ . }}",
 {{- end }}
-{{- with resources.Get "icon-192.png" }}
   "icons": [
-    {
-      "src": "{{ relURL "icon-192.png" }}",
+    {{ with resources.Get "icon-192.png" }}{
+      "src": "{{ .RelPermalink }}",
       "sizes": "192x192"
-    },
-    {
-      "src": "{{ relURL "icon-512.png" }}",
+    }{{ if (resources.Get "icon-512.png") }},{{ end }}{{ end }}
+    {{ with resources.Get "icon-512.png" }}{
+      "src": "{{ .RelPermalink }}",
       "sizes": "512x512"
-    }
+    }{{ end }}
   ],
-{{- end }}
   "display": "standalone"
 }
