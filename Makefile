@@ -41,4 +41,4 @@ iconify-css:
 	python -m wtl.iconify -v -o ${SRC_DIR}/iconify _utils/iconify.toml
 
 ${SRC_DIR}/iconify-icon.mjs:
-	curl -o $@ https://raw.githubusercontent.com/iconify/code/gh-pages/iconify-icon/3.0.1/iconify-icon.mjs
+	curl -fL -o $@ https://raw.githubusercontent.com/iconify/code/gh-pages/iconify-icon/3.0.2/iconify-icon.mjs

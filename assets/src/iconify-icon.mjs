@@ -7,35 +7,27 @@
 * Licensed under MIT.
 *
 * @license MIT
-* @version 3.0.1
+* @version 3.0.2
 */
-/**
-* Default values for dimensions
-*/
+/** Default values for dimensions */
 const defaultIconDimensions = Object.freeze({
 	left: 0,
 	top: 0,
 	width: 16,
 	height: 16
 });
-/**
-* Default values for transformations
-*/
+/** Default values for transformations */
 const defaultIconTransformations = Object.freeze({
 	rotate: 0,
 	vFlip: false,
 	hFlip: false
 });
-/**
-* Default values for all optional IconifyIcon properties
-*/
+/** Default values for all optional IconifyIcon properties */
 const defaultIconProps = Object.freeze({
 	...defaultIconDimensions,
 	...defaultIconTransformations
 });
-/**
-* Default values for all properties used in ExtendedIconifyIcon
-*/
+/** Default values for all properties used in ExtendedIconifyIcon */
 const defaultExtendedIconProps = Object.freeze({
 	...defaultIconProps,
 	body: "",
@@ -90,8 +82,7 @@ const separator = /[\s,]+/;
 */
 function flipFromString(custom, flip) {
 	flip.split(separator).forEach((str) => {
-		const value = str.trim();
-		switch (value) {
+		switch (str.trim()) {
 			case "horizontal":
 				custom.hFlip = true;
 				break;
@@ -373,10 +364,8 @@ function addIconToStorage(storage, name, icon) {
 */
 function listIcons$1(provider, prefix) {
 	let allIcons = [];
-	const providers = typeof provider === "string" ? [provider] : Object.keys(dataStorage);
-	providers.forEach((provider$1) => {
-		const prefixes = typeof provider$1 === "string" && typeof prefix === "string" ? [prefix] : Object.keys(dataStorage[provider$1] || {});
-		prefixes.forEach((prefix$1) => {
+	(typeof provider === "string" ? [provider] : Object.keys(dataStorage)).forEach((provider$1) => {
+		(typeof provider$1 === "string" && typeof prefix === "string" ? [prefix] : Object.keys(dataStorage[provider$1] || {})).forEach((prefix$1) => {
 			const storage = getStorage(provider$1, prefix$1);
 			allIcons = allIcons.concat(Object.keys(storage.icons).map((name) => (provider$1 !== "" ? "@" + provider$1 + ":" : "") + prefix$1 + ":" + name));
 		});
@@ -442,8 +431,7 @@ function addCollection$1(data, provider) {
 		prefix,
 		name: "a"
 	})) return false;
-	const storage = getStorage(provider, prefix);
-	return !!addIconSet(storage, data);
+	return !!addIconSet(getStorage(provider, prefix), data);
 }
 /**
 * Check if icon data is available
@@ -618,7 +606,7 @@ function createAPIConfig(source) {
 		resources = source.resources;
 		if (!(resources instanceof Array) || !resources.length) return null;
 	}
-	const result = {
+	return {
 		resources,
 		path: source.path || "/",
 		maxURL: source.maxURL || 500,
@@ -628,7 +616,6 @@ function createAPIConfig(source) {
 		index: source.index || 0,
 		dataAfterTimeout: source.dataAfterTimeout !== false
 	};
-	return result;
 }
 /**
 * Local storage
@@ -880,7 +867,7 @@ function initRedundancy(cfg) {
 			return callback(value);
 		}) || null;
 	}
-	const instance = {
+	return {
 		query,
 		find,
 		setIndex: (index) => {
@@ -889,7 +876,6 @@ function initRedundancy(cfg) {
 		getIndex: () => config.index,
 		cleanup
 	};
-	return instance;
 }
 
 function emptyCallback$1() {}
@@ -901,12 +887,10 @@ function getRedundancyCache(provider) {
 	if (!redundancyCache[provider]) {
 		const config = getAPIConfig(provider);
 		if (!config) return;
-		const redundancy = initRedundancy(config);
-		const cachedReundancy = {
+		redundancyCache[provider] = {
 			config,
-			redundancy
+			redundancy: initRedundancy(config)
 		};
-		redundancyCache[provider] = cachedReundancy;
 	}
 	return redundancyCache[provider];
 }
@@ -929,8 +913,7 @@ function sendAPIQuery(target, query, callback) {
 		const config = createAPIConfig(target);
 		if (config) {
 			redundancy = initRedundancy(config);
-			const moduleKey = target.resources ? target.resources[0] : "";
-			const api = getAPIModule(moduleKey);
+			const api = getAPIModule(target.resources ? target.resources[0] : "");
 			if (api) send = api.send;
 		}
 	}
@@ -980,8 +963,7 @@ function parseLoaderResponse(storage, icons, data) {
 		});
 	}
 	if (data && typeof data === "object") try {
-		const parsed = addIconSet(storage, data);
-		if (!parsed.length) {
+		if (!addIconSet(storage, data).length) {
 			checkMissing();
 			return;
 		}
@@ -1025,13 +1007,11 @@ function loadNewIcons(storage, icons) {
 			}
 			if (customIconLoader) {
 				icons$1.forEach((name) => {
-					const response = customIconLoader(name, prefix, provider);
-					parsePossiblyAsyncResponse(response, (data) => {
-						const iconSet = data ? {
+					parsePossiblyAsyncResponse(customIconLoader(name, prefix, provider), (data) => {
+						parseLoaderResponse(storage, [name], data ? {
 							prefix,
 							icons: { [name]: data }
-						} : null;
-						parseLoaderResponse(storage, [name], iconSet);
+						} : null);
 					});
 				});
 				return;
@@ -1044,8 +1024,7 @@ function loadNewIcons(storage, icons) {
 				parseLoaderResponse(storage, valid, null);
 				return;
 			}
-			const params = api.prepare(provider, prefix, valid);
-			params.forEach((item) => {
+			api.prepare(provider, prefix, valid).forEach((item) => {
 				sendAPIQuery(provider, item, (data) => {
 					parseLoaderResponse(storage, item.icons, data);
 				});
@@ -1057,8 +1036,7 @@ function loadNewIcons(storage, icons) {
 * Load icons
 */
 const loadIcons$1 = (icons, callback) => {
-	const cleanedIcons = listToIcons(icons, true, allowSimpleNames());
-	const sortedIcons = sortIcons(cleanedIcons);
+	const sortedIcons = sortIcons(listToIcons(icons, true, allowSimpleNames()));
 	if (!sortedIcons.pending.length) {
 		let callCallback = true;
 		if (callback) setTimeout(() => {
@@ -1522,8 +1500,7 @@ const send = (host, params, callback) => {
 	switch (params.type) {
 		case "icons": {
 			const prefix = params.prefix;
-			const icons = params.icons;
-			const iconsList = icons.join(",");
+			const iconsList = params.icons.join(",");
 			const urlParams = new URLSearchParams({ icons: iconsList });
 			path += prefix + ".json?" + urlParams.toString();
 			break;
