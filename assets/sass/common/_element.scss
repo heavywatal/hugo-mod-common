@@ -189,3 +189,23 @@ figure {
     margin-block-start: -0.5em;
   }
 }
+
+details {
+  interpolate-size: allow-keywords;
+
+  summary {
+    cursor: pointer;
+  }
+
+  &::details-content {
+    overflow: clip;
+    transition-duration: 100ms;
+    transition-property: content-visibility, block-size;
+    transition-behavior: allow-discrete;
+    block-size: 0;
+  }
+
+  &[open]::details-content {
+    block-size: auto;
+  }
+}
