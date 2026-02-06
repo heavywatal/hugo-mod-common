@@ -1,8 +1,6 @@
 :root {
-  $link-hue: 220deg;
-  $text-lightness: 27%;
-  --background-color: hsl(#{$link-hue} 0% 75% / 25%);
+  --background-color: oklch(80% 0 0deg / 0.25);
   --canvas: #fff;
-  --canvas-text: hsl(#{$link-hue} 0% #{$text-lightness});
-  --link-text: hsl(#{$link-hue} 100% #{$text-lightness});
+  --canvas-text: oklch(from var(--link-text) l 0 h);
+  --link-text: oklch(38% 0.16 256deg);
 }

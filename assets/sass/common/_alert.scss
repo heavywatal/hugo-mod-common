@@ -1,32 +1,29 @@
 @use "_impl/blockquote";
 
-@mixin markdown-alert-base($color) {
-  background-color: color-mix(in srgb, $color, transparent 96%);
-  border-color: $color;
-  .markdown-alert-title {
-    color: $color;
-  }
-}
-
-.markdown-alert-title {
-  font-weight: 500;
-}
-
 .markdown-alert {
   @extend %blockquote;
+  --lightness: 56%;
+  --chroma: 0.18;
+  --color: oklch(var(--lightness) 0 0deg);
+  background-color: oklch(from var(--color) 84% c h / 0.08);
+  border-color: var(--color);
+  &-title {
+    font-weight: 500;
+    color: var(--color);
+  }
   &-note {
-    @include markdown-alert-base(#0969da);
+    --color: oklch(var(--lightness) var(--chroma) 256deg);
   }
   &-tip {
-    @include markdown-alert-base(#1a7f37);
+    --color: oklch(var(--lightness) var(--chroma) 148deg);
   }
   &-important {
-    @include markdown-alert-base(#8250df);
+    --color: oklch(var(--lightness) var(--chroma) 295deg);
   }
   &-warning {
-    @include markdown-alert-base(#9a6700);
+    --color: oklch(var(--lightness) var(--chroma) 75deg);
   }
   &-caution {
-    @include markdown-alert-base(#d1242f);
+    --color: oklch(var(--lightness) var(--chroma) 25deg);
   }
 }
