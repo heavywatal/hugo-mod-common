@@ -32,7 +32,10 @@ ${KATEX_DST}/fonts: | ${SRC_DIR}/katex/fonts
 	rsync -auv --delete ${SRC_DIR}/katex/fonts/*.woff2 $@
 
 ${SRC_DIR}/katex/fonts:
-	curl -L https://github.com/KaTeX/KaTeX/releases/download/v0.16.28/katex.tar.gz | tar xz -C "${SRC_DIR}"
+	curl -L https://github.com/KaTeX/KaTeX/releases/download/v0.16.33/katex.tar.gz | tar xz -C "${SRC_DIR}"
+
+clean-katex:
+	rm -rf ${KATEX_DST} ${SRC_DIR}/katex
 
 iconify: ${SRC_DIR}/iconify-icon.mjs iconify-css
 	grep @version $<
