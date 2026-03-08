@@ -18,9 +18,6 @@ ${SRC_DIR}/${MATHJAX_FONT}: node_modules/${MATHJAX_FONT}
 	mkdir -p $(dir $@)
 	rsync -auv --delete $</ $@
 
-node_modules/${MATHJAX_JS} node_modules/${MATHJAX_FONT} node_modules/katex/dist/katex.mjs:
-	pnpm install
-
 install-katex: ${SRC_DIR}/katex/katex.mjs
 	grep 'version =' $<
 
@@ -36,5 +33,8 @@ iconify: ${SRC_DIR}/iconify-icon.mjs iconify-css
 iconify-css:
 	python -m wtl.iconify -v -o ${SRC_DIR}/iconify _utils/iconify.toml
 
-${SRC_DIR}/iconify-icon.mjs:
-	curl -fL -o $@ https://raw.githubusercontent.com/iconify/code/gh-pages/iconify-icon/3.0.2/iconify-icon.mjs
+${SRC_DIR}/iconify-icon.mjs: node_modules/iconify-icon/dist/iconify-icon.mjs
+	cp -p $< $@
+
+node_modules/${MATHJAX_JS} node_modules/${MATHJAX_FONT} node_modules/katex/dist/katex.mjs node_modules/iconify-icon/dist/iconify-icon.mjs:
+	pnpm install
