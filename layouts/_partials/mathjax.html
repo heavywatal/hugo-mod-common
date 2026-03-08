@@ -1,7 +1,9 @@
-{{ $js_options := (dict
-  "format" "esm"
-  "minify" true
-) -}}
-{{ with resources.Get "lib/mathjax/tex-chtml.js" | js.Build $js_options -}}
+{{ with resources.Get "lib/mathjax/config.js" -}}
 <script type="module" src="{{ .RelPermalink }}"></script>
+{{ end -}}
+{{ with resources.Get "lib/mathjax/tex-chtml.js" -}}
+<script type="module" src="{{ .RelPermalink }}"></script>
+{{ end -}}
+{{ range resources.Match "lib/@mathjax/mathjax-newcm-font/chtml/woff2/*.woff2" -}}
+{{ .Publish -}}
 {{ end -}}

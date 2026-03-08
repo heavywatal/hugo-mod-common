@@ -1,18 +1,33 @@
 window.MathJax = {
   tex: {
     inlineMath: [
-      ['$', '$'],
-      ['\\(', '\\)']
+      ["$", "$"],
+      ["\\(", "\\)"],
     ],
-    displayMath: [
-      ['\\[', '\\]']
-    ],
-    tags: 'ams'
+    displayMath: [["\\[", "\\]"]],
+    tags: "ams",
+  },
+  output: {
+    scale: 1.0,
+    displayAlign: "left",
+    displayIndent: "2em",
   },
   chtml: {
-    scale: 1.03,
-    displayAlign: 'left',
-    displayIndent: '2em',
-    matchFontHeight: false
-  }
+    matchFontHeight: false,
+  },
+  loader: {
+    paths: {
+      fonts: "/lib/@mathjax",
+    },
+  },
+  options: {
+    enableMenu: false,
+    menuOptions: {
+      settings: {
+        enrich: false,
+        speech: false,
+        braille: false,
+      },
+    },
+  },
 };

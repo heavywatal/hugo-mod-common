@@ -1,0 +1,9 @@
+{
+  "name": "hugo-mod-common",
+  "version": "0.1.0",
+  "description": "Hugo module with common assets",
+  "dependencies": {
+    "@mathjax/mathjax-newcm-font": "^4.1.1",
+    "mathjax": "^4.1.1"
+  }
+}

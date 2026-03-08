@@ -4,3 +4,7 @@
 !/assets/src/katex/contrib/auto-render.mjs
 !/assets/src/katex/katex-swap.css
 !/assets/src/katex/katex.mjs
+/assets/src/mathjax/*
+!/assets/src/mathjax/tex-chtml.js
+/node_modules/
+/pnpm-lock.yaml

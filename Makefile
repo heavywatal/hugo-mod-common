@@ -6,21 +6,21 @@ all: install-mathjax install-katex iconify
 SRC_DIR := assets/src
 STATIC_LIB := static/lib
 
-MATHJAX_SRC := ${SRC_DIR}/MathJax
-MATHJAX_OUTPUT := ${STATIC_LIB}/mathjax/output
+MATHJAX_JS := mathjax/tex-chtml.js
+MATHJAX_FONT := @mathjax/mathjax-newcm-font/chtml/woff2
 
-install-mathjax: | ${SRC_DIR}/tex-chtml.js ${MATHJAX_OUTPUT}
-	grep version ${MATHJAX_SRC}/package.json
+install-mathjax: ${SRC_DIR}/${MATHJAX_JS} ${SRC_DIR}/${MATHJAX_FONT}
+	@:
 
-${SRC_DIR}/tex-chtml.js: | ${MATHJAX_SRC}
-	cp -p ${MATHJAX_SRC}/es5/tex-chtml.js $@
+${SRC_DIR}/${MATHJAX_JS}: node_modules/${MATHJAX_JS}
+	rsync -auv --delete $(dir $<)/ $(dir $@)
 
-${MATHJAX_OUTPUT}: | ${MATHJAX_SRC}
-	mkdir -p $@
-	rsync -auv --delete ${MATHJAX_SRC}/es5/output/chtml $@
+${SRC_DIR}/${MATHJAX_FONT}: node_modules/${MATHJAX_FONT}
+	mkdir -p $(dir $@)
+	rsync -auv --delete $</ $@
 
-${MATHJAX_SRC}:
-	git submodule update --init --recursive
+node_modules/${MATHJAX_JS} node_modules/${MATHJAX_FONT}:
+	pnpm install
 
 KATEX_DST := ${STATIC_LIB}/katex
 

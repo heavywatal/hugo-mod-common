@@ -5,3 +5,20 @@ min = "0.146.0"
 [params]
 math = "katex"
 iconify = true
+
+[module]
+[[module.mounts]]
+source = "assets"
+target = "assets"
+
+[[module.mounts]]
+source = "layouts"
+target = "layouts"
+
+[[module.mounts]]
+source = "assets/src/mathjax"
+target = "assets/lib/mathjax"
+
+[[module.mounts]]
+source = "assets/src/@mathjax"
+target = "assets/lib/@mathjax"
