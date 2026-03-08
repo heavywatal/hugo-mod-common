@@ -1,7 +1,10 @@
 /assets/src/katex/*
 /assets/src/katex/contrib/*
+/assets/src/katex/fonts/*
 !/assets/src/katex/contrib/
 !/assets/src/katex/contrib/auto-render.mjs
+!/assets/src/katex/fonts/
+!/assets/src/katex/fonts/*.woff2
 !/assets/src/katex/katex-swap.css
 !/assets/src/katex/katex.mjs
 /assets/src/mathjax/*

@@ -4,7 +4,6 @@ all: install-mathjax install-katex iconify
 	@:
 
 SRC_DIR := assets/src
-STATIC_LIB := static/lib
 
 MATHJAX_JS := mathjax/tex-chtml.js
 MATHJAX_FONT := @mathjax/mathjax-newcm-font/chtml/woff2
@@ -19,23 +18,17 @@ ${SRC_DIR}/${MATHJAX_FONT}: node_modules/${MATHJAX_FONT}
 	mkdir -p $(dir $@)
 	rsync -auv --delete $</ $@
 
-node_modules/${MATHJAX_JS} node_modules/${MATHJAX_FONT}:
+node_modules/${MATHJAX_JS} node_modules/${MATHJAX_FONT} node_modules/katex/dist/katex.mjs:
 	pnpm install
 
-KATEX_DST := ${STATIC_LIB}/katex
+install-katex: ${SRC_DIR}/katex/katex.mjs
+	grep 'version =' $<
 
-install-katex: | ${KATEX_DST}/fonts
-	grep 'version =' ${SRC_DIR}/katex/katex.mjs
-
-${KATEX_DST}/fonts: | ${SRC_DIR}/katex/fonts
-	mkdir -p ${KATEX_DST}
-	rsync -auv --delete ${SRC_DIR}/katex/fonts/*.woff2 $@
-
-${SRC_DIR}/katex/fonts:
-	curl -L https://github.com/KaTeX/KaTeX/releases/download/v0.16.37/katex.tar.gz | tar xz -C "${SRC_DIR}"
+${SRC_DIR}/katex/katex.mjs: node_modules/katex/dist/katex.mjs
+	rsync -auvC --delete $(dir $<)/ $(dir $@)
 
 clean-katex:
-	rm -rf ${KATEX_DST} ${SRC_DIR}/katex
+	rm -rf ${SRC_DIR}/katex
 
 iconify: ${SRC_DIR}/iconify-icon.mjs iconify-css
 	grep @version $<

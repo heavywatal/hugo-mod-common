@@ -12,3 +12,6 @@
 {{ with resources.Get "lib/katex/katex.min.js" | js.Build $js_options -}}
 <script type="module" src="{{ .RelPermalink }}"></script>
 {{ end -}}
+{{ range resources.Match "lib/katex/fonts/*.woff2" -}}
+{{ .Publish -}}
+{{ end -}}

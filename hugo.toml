@@ -16,6 +16,10 @@ source = "layouts"
 target = "layouts"
 
 [[module.mounts]]
+source = "assets/src/katex"
+target = "assets/lib/katex"
+
+[[module.mounts]]
 source = "assets/src/mathjax"
 target = "assets/lib/mathjax"
 
