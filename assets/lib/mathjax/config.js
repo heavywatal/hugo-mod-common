@@ -1,3 +1,4 @@
+import * as params from "@params";
 window.MathJax = {
   tex: {
     inlineMath: [
@@ -17,7 +18,7 @@ window.MathJax = {
   },
   loader: {
     paths: {
-      fonts: "/lib/@mathjax",
+      fonts: `${params.rel_lib}/@mathjax`,
     },
   },
   options: {

@@ -1,4 +1,11 @@
-{{ with resources.Get "lib/mathjax/config.js" -}}
+{{ $rel_lib := relURL "lib" -}}
+{{ $js_options := (dict
+  "format" "esm"
+  "params" (dict
+    "rel_lib" $rel_lib
+  )
+) -}}
+{{ with resources.Get "lib/mathjax/config.js" | js.Build $js_options -}}
 <script type="module" src="{{ .RelPermalink }}"></script>
 {{ end -}}
 {{ with resources.Get "lib/mathjax/tex-chtml.js" -}}
