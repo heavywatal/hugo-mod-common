@@ -1189,7 +1189,7 @@ class SymbolNode {
     }
     var styles = "";
     if (this.italic > 0) {
-      styles += "margin-right:" + this.italic + "em;";
+      styles += "margin-right:" + makeEm(this.italic) + ";";
     }
     for (var key of Object.keys(this.style)) {
       styles += hyphenate(key) + ":" + this.style[key] + ";";
@@ -8260,8 +8260,8 @@ var makeStackedDelim = function makeStackedDelim(delim, heightTotal, center, opt
     var viewBoxHeight = Math.round(realHeightTotal * 1000);
     var pathStr = tallDelim(svgLabel, Math.round(midHeight * 1000));
     var path = new PathNode(svgLabel, pathStr);
-    var width = (viewBoxWidth / 1000).toFixed(3) + "em";
-    var height = (viewBoxHeight / 1000).toFixed(3) + "em";
+    var width = makeEm(viewBoxWidth / 1000);
+    var height = makeEm(viewBoxHeight / 1000);
     var svg = new SvgNode([path], {
       "width": width,
       "height": height,
@@ -9082,7 +9082,7 @@ var mathmlBuilder$6 = (group, options) => {
         var thk = Math.max(options.fontMetrics().fboxrule,
         // default
         options.minRuleThickness);
-        node.setAttribute("style", "border: " + thk + "em solid " + String(group.borderColor));
+        node.setAttribute("style", "border: " + makeEm(thk) + " solid " + group.borderColor);
       }
       break;
     case "\\xcancel":
@@ -16403,7 +16403,7 @@ var renderToHTMLTree = function renderToHTMLTree(expression, options) {
     return renderError(error, expression, settings);
   }
 };
-var version = "0.16.42";
+var version = "0.16.43";
 var __domTree = {
   Span,
   Anchor,
