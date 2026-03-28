@@ -5,7 +5,7 @@
   "dependencies": {
     "@mathjax/mathjax-newcm-font": "^4.1.1",
     "iconify-icon": "^3.0.2",
-    "katex": "^0.16.43",
+    "katex": "^0.16.44",
     "mathjax": "^4.1.1"
   }
 }

@@ -9631,9 +9631,10 @@ var htmlBuilder$6 = function htmlBuilder(group, options) {
       }
     }
     // In AMS multiline environments such as aligned and gathered, rows
-    // correspond to lines that have additional \jot added to the
-    // \baselineskip via \openup.
-    if (group.addJot) {
+    // correspond to lines that have additional \jot added between lines
+    // via \openup.
+    // We simulate this by adding \jot depth to each row except the last.
+    if (group.addJot && r < group.body.length - 1) {
       depth += jot;
     }
     outrow.height = height;
@@ -16403,7 +16404,7 @@ var renderToHTMLTree = function renderToHTMLTree(expression, options) {
     return renderError(error, expression, settings);
   }
 };
-var version = "0.16.43";
+var version = "0.16.44";
 var __domTree = {
   Span,
   Anchor,
