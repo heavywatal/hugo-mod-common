@@ -1,0 +1,8 @@
+.mark-initial {
+  display: inline-block;
+
+  &::first-letter {
+    font-weight: 700;
+    text-decoration: underline;
+  }
+}
