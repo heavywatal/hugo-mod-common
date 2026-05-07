@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "description": "Hugo module with common assets",
   "dependencies": {
-    "@mathjax/mathjax-newcm-font": "^4.1.1",
+    "@mathjax/mathjax-newcm-font": "^4.1.2",
     "iconify-icon": "^3.0.2",
     "katex": "^0.16.45",
-    "mathjax": "^4.1.1"
+    "mathjax": "^4.1.2"
   }
 }
