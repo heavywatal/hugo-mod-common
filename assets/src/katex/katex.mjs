@@ -248,15 +248,16 @@ function getImplicitDefault(type) {
   }
 }
 function getDefaultValue(schema) {
-  if (schema.default !== undefined) {
+  if (Object.prototype.hasOwnProperty.call(schema, "default") && schema.default !== undefined) {
     return schema.default;
   }
   var type = Array.isArray(schema.type) ? schema.type[0] : schema.type;
   return getImplicitDefault(type);
 }
 function applySetting(target, prop, options, schema) {
-  var optionValue = options[prop];
-  target[prop] = optionValue !== undefined ? schema.processor ? schema.processor(optionValue) : optionValue : getDefaultValue(schema);
+  var optionValue = Object.prototype.hasOwnProperty.call(options, prop) ? options[prop] : undefined;
+  var processor = Object.prototype.hasOwnProperty.call(schema, "processor") ? schema.processor : undefined;
+  target[prop] = optionValue !== undefined ? processor ? processor(optionValue) : optionValue : getDefaultValue(schema);
 }
 /**
  * The main Settings object
@@ -13336,8 +13337,10 @@ class Namespace {
   get(name) {
     if (Object.prototype.hasOwnProperty.call(this.current, name)) {
       return this.current[name];
-    } else {
+    } else if (Object.prototype.hasOwnProperty.call(this.builtins, name)) {
       return this.builtins[name];
+    } else {
+      return undefined;
     }
   }
   /**
@@ -13368,7 +13371,7 @@ class Namespace {
       // value is the correct one.
       var top = this.undefStack[this.undefStack.length - 1];
       if (top && !Object.prototype.hasOwnProperty.call(top, name)) {
-        top[name] = this.current[name];
+        top[name] = Object.prototype.hasOwnProperty.call(this.current, name) ? this.current[name] : undefined;
       }
     }
     if (value == null) {
@@ -16262,7 +16265,7 @@ var renderToHTMLTree = function renderToHTMLTree(expression, options) {
     return renderError(error, expression, settings);
   }
 };
-var version = "0.18.1";
+var version = "0.18.2";
 var __domTree = {
   Span,
   Anchor,
