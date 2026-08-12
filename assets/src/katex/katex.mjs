@@ -8705,7 +8705,7 @@ defineFunction({
   numArgs: 1,
   argTypes: ["primitive"],
   handler: (context, args) => {
-    var delim = checkDelimiter(args[0], context);
+    var delim = checkDelimiter(normalizeArgument(args[0]), context);
     return {
       type: "delimsizing",
       mode: context.parser.mode,
@@ -16265,7 +16265,7 @@ var renderToHTMLTree = function renderToHTMLTree(expression, options) {
     return renderError(error, expression, settings);
   }
 };
-var version = "0.18.2";
+var version = "0.18.3";
 var __domTree = {
   Span,
   Anchor,
