@@ -6818,6 +6818,24 @@ function checkSymbolNodeType(node) {
   }
   return null;
 }
+/**
+ * Returns the string spelled out by a group of plain characters, throwing the
+ * given ParseError if the group holds anything else. With allowSpaces, a
+ * literal space counts as a character; `~` and `\ ` do not.
+ */
+function assertCharacterGroup(group, errorMessage, allowSpaces) {
+  var text = "";
+  for (var node of group.body) {
+    if (node.type === "textord") {
+      text += node.text;
+    } else if (allowSpaces && node.type === "spacing" && node.text === " ") {
+      text += " ";
+    } else {
+      throw new ParseError(errorMessage, group);
+    }
+  }
+  return text;
+}
 
 var getBaseSymbol = group => {
   if (group instanceof SymbolNode) {
@@ -7658,12 +7676,7 @@ defineFunction({
   handler(_ref, args) {
     var parser = _ref.parser;
     var arg = assertNodeType(args[0], "ordgroup");
-    var group = arg.body;
-    var number = "";
-    for (var i = 0; i < group.length; i++) {
-      var node = assertNodeType(group[i], "textord");
-      number += node.text;
-    }
+    var number = assertCharacterGroup(arg, "\\@char has non-numeric argument");
     var code = parseInt(number);
     var text;
     if (isNaN(code)) {
@@ -9948,19 +9961,19 @@ var alignedHandler = function alignedHandler(context, args) {
     body: []
   };
   if (args[0] && args[0].type === "ordgroup") {
-    var arg0 = "";
-    for (var i = 0; i < args[0].body.length; i++) {
-      var textord = assertNodeType(args[0].body[i], "textord");
-      arg0 += textord.text;
+    var message = "Number of columns should be a positive integer";
+    var numColumns = assertCharacterGroup(args[0], message);
+    if (!/^[0-9]+$/.test(numColumns) || Number(numColumns) < 1) {
+      throw new ParseError(message, args[0]);
     }
-    numMaths = Number(arg0);
+    numMaths = Number(numColumns);
     numCols = numMaths * 2;
   }
   var isAligned = !numCols;
   res.body.forEach(function (row) {
-    for (var _i4 = 1; _i4 < row.length; _i4 += 2) {
+    for (var i = 1; i < row.length; i += 2) {
       // Modify ordgroup node within styling node
-      var styling = assertNodeType(row[_i4], "styling");
+      var styling = assertNodeType(row[i], "styling");
       var ordgroup = assertNodeType(styling.body[0], "ordgroup");
       ordgroup.body.unshift(emptyGroup);
     }
@@ -9978,16 +9991,16 @@ var alignedHandler = function alignedHandler(context, args) {
   // Adjusting alignment.
   // In aligned mode, we add one \qquad between columns;
   // otherwise we add nothing.
-  for (var _i5 = 0; _i5 < numCols; ++_i5) {
+  for (var i = 0; i < numCols; ++i) {
     var align = "r";
     var pregap = 0;
-    if (_i5 % 2 === 1) {
+    if (i % 2 === 1) {
       align = "l";
-    } else if (_i5 > 0 && isAligned) {
+    } else if (i > 0 && isAligned) {
       // "aligned" mode.
       pregap = 1; // add one \quad
     }
-    cols[_i5] = {
+    cols[i] = {
       type: "align",
       align: align,
       pregap: pregap,
@@ -10337,10 +10350,7 @@ defineFunction({
     if (nameGroup.type !== "ordgroup") {
       throw new ParseError("Invalid environment name", nameGroup);
     }
-    var envName = "";
-    for (var i = 0; i < nameGroup.body.length; ++i) {
-      envName += assertNodeType(nameGroup.body[i], "textord").text;
-    }
+    var envName = assertCharacterGroup(nameGroup, "Environment name should contain only text characters and spaces", true);
     if (funcName === "\\begin") {
       // begin...end is similar to left...right
       if (!Object.prototype.hasOwnProperty.call(environments, envName)) {
@@ -16265,7 +16275,7 @@ var renderToHTMLTree = function renderToHTMLTree(expression, options) {
     return renderError(error, expression, settings);
   }
 };
-var version = "0.18.3";
+var version = "0.18.4";
 var __domTree = {
   Span,
   Anchor,
