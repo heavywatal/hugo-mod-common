@@ -7,7 +7,7 @@
 * Licensed under MIT.
 *
 * @license MIT
-* @version 3.0.2
+* @version 3.0.3
 */
 /** Default values for dimensions */
 const defaultIconDimensions = Object.freeze({
@@ -51,9 +51,9 @@ const defaultIconCustomisations = Object.freeze({
 */
 function rotateFromString(value, defaultValue = 0) {
 	const units = value.replace(/^-?[0-9.]*/, "");
-	function cleanup(value$1) {
-		while (value$1 < 0) value$1 += 4;
-		return value$1 % 4;
+	function cleanup(value) {
+		while (value < 0) value += 4;
+		return value % 4;
 	}
 	if (units === "") {
 		const num = parseInt(value);
@@ -86,9 +86,7 @@ function flipFromString(custom, flip) {
 			case "horizontal":
 				custom.hFlip = true;
 				break;
-			case "vertical":
-				custom.vFlip = true;
-				break;
+			case "vertical": custom.vFlip = true;
 		}
 	});
 }
@@ -146,12 +144,12 @@ const stringToIcon = (value, validate, allowSimpleName, provider = "") => {
 	}
 	if (colonSeparated.length > 3 || !colonSeparated.length) return null;
 	if (colonSeparated.length > 1) {
-		const name$1 = colonSeparated.pop();
+		const name = colonSeparated.pop();
 		const prefix = colonSeparated.pop();
 		const result = {
 			provider: colonSeparated.length > 0 ? colonSeparated[0] : provider,
 			prefix,
-			name: name$1
+			name
 		};
 		return validate && !validateIconName(result) ? null : result;
 	}
@@ -241,8 +239,8 @@ function internalGetIconData(data, name, tree) {
 	const icons = data.icons;
 	const aliases = data.aliases || Object.create(null);
 	let currentProps = {};
-	function parse(name$1) {
-		currentProps = mergeIconData(icons[name$1] || aliases[name$1], currentProps);
+	function parse(name) {
+		currentProps = mergeIconData(icons[name] || aliases[name], currentProps);
 	}
 	parse(name);
 	tree.forEach(parse);
@@ -364,10 +362,10 @@ function addIconToStorage(storage, name, icon) {
 */
 function listIcons$1(provider, prefix) {
 	let allIcons = [];
-	(typeof provider === "string" ? [provider] : Object.keys(dataStorage)).forEach((provider$1) => {
-		(typeof provider$1 === "string" && typeof prefix === "string" ? [prefix] : Object.keys(dataStorage[provider$1] || {})).forEach((prefix$1) => {
-			const storage = getStorage(provider$1, prefix$1);
-			allIcons = allIcons.concat(Object.keys(storage.icons).map((name) => (provider$1 !== "" ? "@" + provider$1 + ":" : "") + prefix$1 + ":" + name));
+	(typeof provider === "string" ? [provider] : Object.keys(dataStorage)).forEach((provider) => {
+		(typeof provider === "string" && typeof prefix === "string" ? [prefix] : Object.keys(dataStorage[provider] || {})).forEach((prefix) => {
+			const storage = getStorage(provider, prefix);
+			allIcons = allIcons.concat(Object.keys(storage.icons).map((name) => (provider !== "" ? "@" + provider + ":" : "") + prefix + ":" + name));
 		});
 	});
 	return allIcons;
@@ -431,7 +429,8 @@ function addCollection$1(data, provider) {
 		prefix,
 		name: "a"
 	})) return false;
-	return !!addIconSet(getStorage(provider, prefix), data);
+	const storage = getStorage(provider, prefix);
+	return !!addIconSet(storage, data);
 }
 /**
 * Check if icon data is available
@@ -675,7 +674,6 @@ const defaultConfig = {
 	random: false,
 	dataAfterTimeout: false
 };
-
 /**
 * Send query
 */
@@ -781,8 +779,10 @@ function sendQuery(config, payload, query, done) {
 		}
 		if (isError) {
 			lastError = data;
-			if (!queue.length) if (!resources.length) failQuery();
-			else execNext();
+			if (!queue.length) {
+				if (!resources.length) failQuery();
+				else execNext();
+			}
 			return;
 		}
 		resetTimer();
@@ -820,8 +820,8 @@ function sendQuery(config, payload, query, done) {
 		const item = {
 			status: "pending",
 			resource,
-			callback: (status$1, data) => {
-				moduleResponse(item, status$1, data);
+			callback: (status, data) => {
+				moduleResponse(item, status, data);
 			}
 		};
 		queue.push(item);
@@ -832,7 +832,6 @@ function sendQuery(config, payload, query, done) {
 	setTimeout(execNext);
 	return getQueryStatus;
 }
-
 /**
 * Redundancy instance
 */
@@ -852,12 +851,12 @@ function initRedundancy(cfg) {
 	* Send query
 	*/
 	function query(payload, queryCallback, doneCallback) {
-		const query$1 = sendQuery(config, payload, queryCallback, (data, error) => {
+		const query = sendQuery(config, payload, queryCallback, (data, error) => {
 			cleanup();
 			if (doneCallback) doneCallback(data, error);
 		});
-		queries.push(query$1);
-		return query$1;
+		queries.push(query);
+		return query;
 	}
 	/**
 	* Find instance
@@ -887,10 +886,11 @@ function getRedundancyCache(provider) {
 	if (!redundancyCache[provider]) {
 		const config = getAPIConfig(provider);
 		if (!config) return;
-		redundancyCache[provider] = {
+		const cachedReundancy = {
 			config,
 			redundancy: initRedundancy(config)
 		};
+		redundancyCache[provider] = cachedReundancy;
 	}
 	return redundancyCache[provider];
 }
@@ -913,7 +913,8 @@ function sendAPIQuery(target, query, callback) {
 		const config = createAPIConfig(target);
 		if (config) {
 			redundancy = initRedundancy(config);
-			const api = getAPIModule(target.resources ? target.resources[0] : "");
+			const moduleKey = target.resources ? target.resources[0] : "";
+			const api = getAPIModule(moduleKey);
 			if (api) send = api.send;
 		}
 	}
@@ -995,18 +996,18 @@ function loadNewIcons(storage, icons) {
 		setTimeout(() => {
 			storage.iconsQueueFlag = false;
 			const { provider, prefix } = storage;
-			const icons$1 = storage.iconsToLoad;
+			const icons = storage.iconsToLoad;
 			delete storage.iconsToLoad;
-			if (!icons$1 || !icons$1.length) return;
+			if (!icons || !icons.length) return;
 			const customIconLoader = storage.loadIcon;
-			if (storage.loadIcons && (icons$1.length > 1 || !customIconLoader)) {
-				parsePossiblyAsyncResponse(storage.loadIcons(icons$1, prefix, provider), (data) => {
-					parseLoaderResponse(storage, icons$1, data);
+			if (storage.loadIcons && (icons.length > 1 || !customIconLoader)) {
+				parsePossiblyAsyncResponse(storage.loadIcons(icons, prefix, provider), (data) => {
+					parseLoaderResponse(storage, icons, data);
 				});
 				return;
 			}
 			if (customIconLoader) {
-				icons$1.forEach((name) => {
+				icons.forEach((name) => {
 					parsePossiblyAsyncResponse(customIconLoader(name, prefix, provider), (data) => {
 						parseLoaderResponse(storage, [name], data ? {
 							prefix,
@@ -1016,7 +1017,7 @@ function loadNewIcons(storage, icons) {
 				});
 				return;
 			}
-			const { valid, invalid } = checkIconNamesForAPI(icons$1);
+			const { valid, invalid } = checkIconNamesForAPI(icons);
 			if (invalid.length) parseLoaderResponse(storage, invalid, null);
 			if (!valid.length) return;
 			const api = prefix.match(matchIconName) ? getAPIModule(provider) : null;
@@ -1036,7 +1037,8 @@ function loadNewIcons(storage, icons) {
 * Load icons
 */
 const loadIcons$1 = (icons, callback) => {
-	const sortedIcons = sortIcons(listToIcons(icons, true, allowSimpleNames()));
+	const cleanedIcons = listToIcons(icons, true, allowSimpleNames());
+	const sortedIcons = sortIcons(cleanedIcons);
 	if (!sortedIcons.pending.length) {
 		let callCallback = true;
 		if (callback) setTimeout(() => {
@@ -1294,13 +1296,14 @@ function iconToSVG(icon, customisations) {
 		const hFlip = props.hFlip;
 		const vFlip = props.vFlip;
 		let rotation = props.rotate;
-		if (hFlip) if (vFlip) rotation += 2;
-		else {
-			transformations.push("translate(" + (box.width + box.left).toString() + " " + (0 - box.top).toString() + ")");
-			transformations.push("scale(-1 1)");
-			box.top = box.left = 0;
-		}
-		else if (vFlip) {
+		if (hFlip) {
+			if (vFlip) rotation += 2;
+			else {
+				transformations.push("translate(" + (box.width + box.left).toString() + " " + (0 - box.top).toString() + ")");
+				transformations.push("scale(-1 1)");
+				box.top = box.left = 0;
+			}
+		} else if (vFlip) {
 			transformations.push("translate(" + (0 - box.left).toString() + " " + (box.height + box.top).toString() + ")");
 			transformations.push("scale(1 -1)");
 			box.top = box.left = 0;
@@ -1319,7 +1322,6 @@ function iconToSVG(icon, customisations) {
 			case 3:
 				tempValue = box.width / 2 + box.left;
 				transformations.unshift("rotate(-90 " + tempValue.toString() + " " + tempValue.toString() + ")");
-				break;
 		}
 		if (rotation % 2 === 1) {
 			if (box.left !== box.top) {
@@ -1384,7 +1386,7 @@ function iconToHTML$1(body, attributes) {
 * smaller code.
 */
 function encodeSVGforURL(svg) {
-	return svg.replace(/"/g, "'").replace(/%/g, "%25").replace(/#/g, "%23").replace(/</g, "%3C").replace(/>/g, "%3E").replace(/\s+/g, " ");
+	return svg.replace(/"/g, "'").replace(/%/g, "%25").replace(/#/g, "%23").replace(/</g, "%3C").replace(/>/g, "%3E").replace(/\s+/g, " ").replace(/:/g, "%3A").replace(/\//g, "%2F");
 }
 /**
 * Generate data: URL from SVG
@@ -1413,8 +1415,8 @@ let fetchModule = detectFetch();
 /**
 * Set custom fetch() function
 */
-function setFetch(fetch$1) {
-	fetchModule = fetch$1;
+function setFetch(fetch) {
+	fetchModule = fetch;
 }
 /**
 * Get fetch() function. Used by Icon Finder Core
@@ -1433,8 +1435,7 @@ function calculateMaxLength(provider, prefix) {
 	else {
 		let maxHostLength = 0;
 		config.resources.forEach((item) => {
-			const host = item;
-			maxHostLength = Math.max(maxHostLength, host.length);
+			maxHostLength = Math.max(maxHostLength, item.length);
 		});
 		const url = prefix + ".json?icons=";
 		result = config.maxURL - maxHostLength - config.path.length - url.length;
@@ -1570,17 +1571,68 @@ const nodeAttr = 'data-style';
  */
 let customStyle = '';
 /**
+ * Shared constructed style sheets, one per inline mode
+ *
+ * All components share the same two sheets instead of each component
+ * owning a <style> node, which matters on pages with many icons.
+ */
+const sharedSheets = {};
+/**
+ * Generate style content
+ */
+function getStyleContent(inline) {
+    return (':host{display:inline-block;vertical-align:' +
+        (inline ? '-0.125em' : '0') +
+        '}span,svg{display:block;margin:auto}' +
+        customStyle);
+}
+/**
+ * Check if constructed style sheets can be used for parent
+ */
+function supportsAdoptedStyleSheets(parent) {
+    return ('adoptedStyleSheets' in parent &&
+        typeof CSSStyleSheet === 'function' &&
+        typeof CSSStyleSheet.prototype.replaceSync === 'function');
+}
+/**
+ * Get shared style sheet for inline mode, create if needed
+ */
+function getSharedSheet(inline) {
+    const key = inline ? 'inline' : 'block';
+    let sheet = sharedSheets[key];
+    if (!sheet) {
+        sheet = sharedSheets[key] = new CSSStyleSheet();
+        sheet.replaceSync(getStyleContent(inline));
+    }
+    return sheet;
+}
+/**
  * Set custom style to add to all components
  *
- * Affects only components rendered after function call
+ * Components that share a constructed style sheet are updated immediately.
+ * Components that use a <style> node are affected only if rendered after function call.
  */
 function appendCustomStyle(style) {
     customStyle = style;
+    sharedSheets.inline?.replaceSync(getStyleContent(true));
+    sharedSheets.block?.replaceSync(getStyleContent(false));
 }
 /**
  * Add/update style node
  */
 function updateStyle(parent, inline) {
+    if (supportsAdoptedStyleSheets(parent)) {
+        const sheet = getSharedSheet(inline);
+        const current = parent.adoptedStyleSheets;
+        if (current.includes(sheet)) {
+            return;
+        }
+        // Replace previously adopted shared sheet, keep sheets adopted by others
+        parent.adoptedStyleSheets = current
+            .filter((item) => item !== sharedSheets.inline && item !== sharedSheets.block)
+            .concat(sheet);
+        return;
+    }
     // Get node, create if needed
     let styleNode = Array.from(parent.childNodes).find((node) => node.hasAttribute &&
         node.hasAttribute(nodeAttr));
@@ -1590,11 +1642,7 @@ function updateStyle(parent, inline) {
         parent.appendChild(styleNode);
     }
     // Update content
-    styleNode.textContent =
-        ':host{display:inline-block;vertical-align:' +
-            (inline ? '-0.125em' : '0') +
-            '}span,svg{display:block;margin:auto}' +
-            customStyle;
+    styleNode.textContent = getStyleContent(inline);
 }
 
 // Core
@@ -1864,9 +1912,7 @@ function renderIcon(parent, state) {
  */
 function setPendingState(icon, inline, lastState) {
     const lastRender = lastState &&
-        (lastState.rendered
-            ? lastState
-            : lastState.lastRender);
+        (lastState.rendered ? lastState : lastState.lastRender);
     return {
         rendered: false,
         inline,

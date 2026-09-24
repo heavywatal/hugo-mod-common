@@ -4,7 +4,7 @@
   "description": "Hugo module with common assets",
   "dependencies": {
     "@mathjax/mathjax-newcm-font": "^4.1.3",
-    "iconify-icon": "^3.0.2",
+    "iconify-icon": "^3.0.3",
     "katex": "^0.18.7",
     "mathjax": "^4.1.3"
   }
