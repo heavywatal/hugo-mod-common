@@ -9491,9 +9491,10 @@ function parseArray(parser, _ref, style) {
       endRow();
       // Arrays terminate newlines with `\crcr` which consumes a `\cr` if
       // the last line is empty.  However, AMS environments keep the
-      // empty row if it's the only one or has a manual tag.
+      // empty row if it's the only one, has a manual tag, or is an
+      // automatically numbered row explicitly ended with `\\`.
       // NOTE: Currently, `cell` is the last item added into `row`.
-      if (row.length === 1 && cell.type === "styling" && cell.body.length === 1 && cell.body[0].type === "ordgroup" && cell.body[0].body.length === 0 && (body.length > 1 || !emptySingleRow) && !Array.isArray(tags == null ? void 0 : tags[tags.length - 1])) {
+      if (row.length === 1 && cell.type === "styling" && cell.body.length === 1 && cell.body[0].type === "ordgroup" && cell.body[0].body.length === 0 && (body.length > 1 || !emptySingleRow) && !Array.isArray(tags == null ? void 0 : tags[tags.length - 1]) && !(autoTag && (tags == null ? void 0 : tags[tags.length - 1]) === true)) {
         body.pop();
       }
       if (hLinesBeforeRow.length < body.length + 1) {
@@ -16309,7 +16310,7 @@ var renderToHTMLTree = function renderToHTMLTree(expression, options) {
     return renderError(error, expression, settings);
   }
 };
-var version = "0.18.7";
+var version = "0.18.9";
 var __domTree = {
   Span,
   Anchor,
