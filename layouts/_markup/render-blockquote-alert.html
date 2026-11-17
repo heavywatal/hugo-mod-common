@@ -1,11 +1,14 @@
-{{ if or .AlertSign .AlertTitle -}}
-<blockquote>
-<p>[!{{ .AlertType }}]{{ .AlertSign }} {{ .AlertTitle }}</p>
-{{ .Text }}</blockquote>
+{{ if .AlertSign -}}
+<details{{ if eq .AlertSign "+" }} open{{ end }} class="markdown-alert markdown-alert-{{ .AlertType }}">
+<summary class="markdown-alert-title">{{ partial "iconify-alert.html" .AlertType -}}
+{{ with .AlertTitle }}{{ . }}{{ else }}{{ strings.FirstUpper .AlertType }}{{ end -}}
+</summary>
+{{ .Text }}
+</details>
 {{ else -}}
 <div class="markdown-alert markdown-alert-{{ .AlertType }}">
 <p class="markdown-alert-title">{{ partial "iconify-alert.html" .AlertType -}}
-{{ strings.FirstUpper .AlertType }}{{ with .AlertTitle }}: {{ . }}{{ end -}}
+{{ with .AlertTitle }}{{ . }}{{ else }}{{ strings.FirstUpper .AlertType }}{{ end -}}
 </p>
 {{ .Text }}
 </div>

@@ -26,4 +26,7 @@
   &-caution {
     --color: oklch(var(--lightness) var(--chroma) 25deg);
   }
+  summary {
+    margin: 0.5em 0;
+  }
 }
