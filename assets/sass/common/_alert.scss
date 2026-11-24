@@ -11,20 +11,26 @@
     font-weight: 500;
     color: var(--color);
   }
-  &-note {
+  &-note, &-info, &-todo {
     --color: oklch(var(--lightness) var(--chroma) 256deg);
   }
-  &-tip {
+  &-tip, &-hint, &-success, &-check, &-done {
     --color: oklch(var(--lightness) var(--chroma) 148deg);
   }
   &-important {
     --color: oklch(var(--lightness) var(--chroma) 295deg);
   }
-  &-warning {
+  &-warning, &-attention, &-question, &-help, &-faq {
     --color: oklch(var(--lightness) var(--chroma) 75deg);
   }
-  &-caution {
+  &-caution, &-failure, &-fail, &-missing, &-danger, &-error, &-bug {
     --color: oklch(var(--lightness) var(--chroma) 25deg);
+  }
+  &-abstract, &-summary, &-tldr {
+    --color: oklch(var(--lightness) var(--chroma) 193deg);
+  }
+  &-example {
+    --color: oklch(var(--lightness) var(--chroma) 288deg);
   }
   summary {
     margin: 0.5em 0;
