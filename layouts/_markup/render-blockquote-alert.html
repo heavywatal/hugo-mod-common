@@ -1,35 +1,7 @@
-{{ $icons := dict
-  "note" "octicon:info-16"
-  "tip" "octicon:light-bulb-16"
-  "important" "octicon:report-16"
-  "warning" "octicon:alert-16"
-  "caution" "octicon:stop-16"
-  "info" "octicon:info-16"
-  "todo" "octicon:check-16"
-  "success" "octicon:check-16"
-  "check" "octicon:check-16"
-  "done" "octicon:check-16"
-  "question" "octicon:question-16"
-  "help" "octicon:question-16"
-  "faq" "octicon:question-16"
-  "attention" "octicon:alert-16"
-  "failure" "octicon:x-16"
-  "fail" "octicon:x-16"
-  "missing" "octicon:x-16"
-  "danger" "octicon:zap-16"
-  "error" "octicon:zap-16"
-  "bug" "octicon:bug-16"
-  "example" "octicon:list-unordered-16"
-  "abstract" "octicon:list-unordered-16"
-  "summary" "octicon:list-unordered-16"
-  "tldr" "octicon:list-unordered-16"
-  "quote" "bi:quote"
-  "cite" "bi:quote"
--}}
 {{ if .AlertSign -}}
 <details{{ if eq .AlertSign "+" }} open{{ end }} class="markdown-alert markdown-alert-{{ .AlertType }}">
 <summary class="markdown-alert-title">
-{{- $icon := index $icons .AlertType }}{{ with $icon -}}
+{{- with $icon := index hugo.Data.iconify .AlertType -}}
 <iconify-icon inline {{ printf "icon=%q" . | safeHTMLAttr }}></iconify-icon>{{ end -}}
 {{ with .AlertTitle }}{{ . }}{{ else }}{{ strings.FirstUpper .AlertType }}{{ end -}}
 </summary>
@@ -38,7 +10,7 @@
 {{ else -}}
 <div class="markdown-alert markdown-alert-{{ .AlertType }}">
 <p class="markdown-alert-title">
-{{- $icon := index $icons .AlertType }}{{ with $icon -}}
+{{- with $icon := index hugo.Data.iconify .AlertType -}}
 <iconify-icon inline {{ printf "icon=%q" . | safeHTMLAttr }}></iconify-icon>{{ end -}}
 {{ with .AlertTitle }}{{ . }}{{ else }}{{ strings.FirstUpper .AlertType }}{{ end -}}
 </p>
