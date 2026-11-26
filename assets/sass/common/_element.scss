@@ -36,7 +36,7 @@ a {
   }
 }
 
-ul, ol {
+:where(ul, ol) {
   padding-inline-start: 1.8em;
   margin-block: 0.5em;
   li & {
@@ -46,7 +46,7 @@ ul, ol {
 
 li {
   margin-block: 0.25em;
-  li, p {
+  :where(li, p) {
     margin-block: 0.2em;
   }
 }
@@ -56,13 +56,12 @@ input[type="search"] {
 }
 
 input[type="checkbox"] {
-  ul:has(> li > &),
-  ul:has(> li > p > &) {
+  vertical-align: text-bottom;
+  ul:has(> li > :where(&, p > &)) {
     list-style-type: none;
   }
-  ul > li > &,
-  ul > li > p > & {
-    margin-inline-start: -1.5em;
+  ul > li > :where(&, p > &) {
+    margin-inline-start: -1.4em;
   }
 }
 
@@ -90,7 +89,7 @@ dd {
   }
 }
 
-code, pre {
+:where(code, pre) {
   font-family: var(--monospace);
   text-spacing-trim: space-all;
 }
@@ -142,7 +141,7 @@ table {
   border-spacing: 0.4em;
 }
 
-th, td {
+:where(th, td) {
   padding-inline: 0.4em;
 }
 
@@ -165,7 +164,7 @@ kbd {
   border-radius: 0.18em;
 }
 
-sub, sup {
+:where(sub, sup) {
   line-height: 1;
 }
 

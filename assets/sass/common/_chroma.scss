@@ -1,163 +1,177 @@
 // https://github.com/alecthomas/chroma/blob/master/types.go
-.chroma, .code-inline {
-
-  .k,  // Keyword
-  .kd, // KeywordDeclaration
-  .kn, // KeywordNamespace
-  .kp, // KeywordPseudo
-  .kr, // KeywordReserved
-  .kt, // KeywordType
-  .ow  // OperatorWord
-  {
-    color: #56B4E9;
+:is(.chroma, .code-inline) {
+  :is(
+      .k, // Keyword
+      .kd, // KeywordDeclaration
+      .kn, // KeywordNamespace
+      .kp, // KeywordPseudo
+      .kr, // KeywordReserved
+      .kt, // KeywordType
+      .ow // OperatorWord
+    ) {
+    color: #56b4e9;
   }
 
-  .kc, // KeywordConstant
-  .no, // NameConstant
-  .nd, // NameDecorator
-  .ni, // NameEntity
-  .nn  // NameNamespace
-  {
-    color: #0072B2;
+  :is(
+      .kc, // KeywordConstant
+      .no, // NameConstant
+      .nd, // NameDecorator
+      .ni, // NameEntity
+      .nn // NameNamespace
+    ) {
+    color: #0072b2;
   }
 
-  .nb, // NameBuiltin
-  .bp, // NameBuiltinPseudo
-  .ne, // NameException
-  .py, // NameProperty
-  .nl, // NameLabel
-  .nt  // NameTag
-  {
-    color: #009E73;
+  :is(
+      .nb, // NameBuiltin
+      .bp, // NameBuiltinPseudo
+      .ne, // NameException
+      .py, // NameProperty
+      .nl, // NameLabel
+      .nt // NameTag
+    ) {
+    color: #009e73;
   }
 
-  .nc, // NameClass
-  .nf, // NameFunction
-  .fm  // NameFunctionMagic
-  {
-    color: #E69F00;
+  :is(
+      .nc, // NameClass
+      .nf, // NameFunction
+      .fm // NameFunctionMagic
+    ) {
+    color: #e69f00;
   }
 
-  .na, // NameAttribute
-  .nx, // NameOther
-  .nv, // NameVariable
-  .vc, // NameVariableClass
-  .vg, // NameVariableGlobal
-  .vi, // NameVariableInstance
-  .vm, // NameVariableMagic
-  .si  // StringInterpol
-  {
-    color: #D55E00;
+  :is(
+      .na, // NameAttribute
+      .nx, // NameOther
+      .nv, // NameVariable
+      .vc, // NameVariableClass
+      .vg, // NameVariableGlobal
+      .vi, // NameVariableInstance
+      .vm, // NameVariableMagic
+      .si // StringInterpol
+    ) {
+    color: #d55e00;
   }
 
-  .l,  // Literal
-  .ld, // LiteralDate
-  .s,  // String
-  .sa, // StringAffix
-  .sb, // StringBacktick
-  .sc, // StringChar
-  .dl, // StringDelimiter
-  .sd, // StringDoc
-  .s2, // StringDouble
-  .se, // StringEscape
-  .sh, // StringHeredoc
-  .sx, // StringOther
-  .sr, // StringRegex
-  .s1, // StringSingle
-  .ss  // StringSymbol
-  {
-    color: #CC79A7;
+  :is(
+      .l, // Literal
+      .ld, // LiteralDate
+      .s, // String
+      .sa, // StringAffix
+      .sb, // StringBacktick
+      .sc, // StringChar
+      .dl, // StringDelimiter
+      .sd, // StringDoc
+      .s2, // StringDouble
+      .se, // StringEscape
+      .sh, // StringHeredoc
+      .sx, // StringOther
+      .sr, // StringRegex
+      .s1, // StringSingle
+      .ss // StringSymbol
+    ) {
+    color: #cc79a7;
   }
 
-  .m,  // Number
-  .mb, // NumberBin
-  .mf, // NumberFloat
-  .mh, // NumberHex
-  .mi, // NumberInteger
-  .il, // NumberIntegerLong
-  .mo  // NumberOct
-  {
-    color: #CC79A7;
+  :is(
+      .m, // Number
+      .mb, // NumberBin
+      .mf, // NumberFloat
+      .mh, // NumberHex
+      .mi, // NumberInteger
+      .il, // NumberIntegerLong
+      .mo // NumberOct
+    ) {
+    color: #cc79a7;
   }
 
-  .n,  // Name
-  .o,  // Operator
-  .p   // Punctuation
-  {
+  :is(
+      .n, // Name
+      .o, // Operator
+      .p // Punctuation
+    ) {
     opacity: 0.95;
   }
 
-  .c,  // Comment
-  .ch, // CommentHashbang
-  .cm, // CommentMultiline
-  .cp, // CommentPreproc
-  .cpf,// CommentPreprocFile
-  .c1, // CommentSingle
-  .cs, // CommentSpecial
-  .si  // StringInterpol
-  {
+  :is(
+      .c, // Comment
+      .ch, // CommentHashbang
+      .cm, // CommentMultiline
+      .cp, // CommentPreproc
+      .cpf, // CommentPreprocFile
+      .c1, // CommentSingle
+      .cs, // CommentSpecial
+      .si // StringInterpol
+    ) {
     opacity: 0.66;
   }
 
-  .g,  // Generic
-  .ge, // GenericEmph
-  .gr, // GenericError
-  .go, // GenericOutput
-  .gp, // GenericPrompt
-  .gt  // GenericTraceback
-  {
+  :is(
+      .g, // Generic
+      .ge, // GenericEmph
+      .gr, // GenericError
+      .go, // GenericOutput
+      .gp, // GenericPrompt
+      .gt // GenericTraceback
+    ) {
     font-style: italic;
   }
 
-  .gh, // GenericHeading
-  .gu, // GenericSubheading
-  .gs  // GenericStrong
-  {
+  :is(
+      .gh, // GenericHeading
+      .gu, // GenericSubheading
+      .gs // GenericStrong
+    ) {
     font-weight: bold;
   }
 
-  .err,// Error
-  .gd  // GenericDeleted
-  {
+  :is(
+      .err, // Error
+      .gd // GenericDeleted
+    ) {
     background-color: #f002;
   }
 
-  .gi  // GenericInserted
+  .gi // GenericInserted
   {
     background-color: #0f02;
   }
 
-  .gl  // GenericUnderline
+  .gl // GenericUnderline
   {
-    text-decoration: underline
+    text-decoration: underline;
   }
 
-  .hl  // LineHighlight
+  .hl // LineHighlight
   {
     background-color: #ff03;
   }
 
-  .w,  // Whitespace
-  .x   // Other
-  {
+  :is(
+      .w, // Whitespace
+      .x // Other
+    ) {
     background-color: #00f3;
   }
 
-  .ln  // LineNumber
+  .ln // LineNumber
   {
     margin-inline-end: 1em;
   }
 
-  .ln, // LineNumbers
-  .lnt // LineNumbersTable
-  {
+  :is(
+      .ln, // LineNumbers
+      .lnt // LineNumbersTable
+    ) {
     user-select: none;
     opacity: 0.6;
   }
 
-  .lnt, // LineNumbersTable
-  .line // Line
-  {
+  :is(
+      .lnt, // LineNumbersTable
+      .line // Line
+    ) {
     display: block;
   }
 
@@ -174,9 +188,10 @@
     }
   }
 
-  .lntd, // LineTableID
-  .lntable // LineTable
-  {
+  :is(
+      .lntd, // LineTableID
+      .lntable // LineTable
+    ) {
     padding: 0;
     margin: 0;
     border: 0;
