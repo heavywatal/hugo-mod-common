@@ -8,6 +8,12 @@
   box-sizing: inherit;
 }
 
+:root {
+  line-break: strict;
+  overflow-wrap: anywhere;
+  text-spacing-trim: trim-start;
+}
+
 html {
   box-sizing: border-box;
   -webkit-text-size-adjust: 100%;
@@ -86,6 +92,7 @@ dd {
 
 code, pre {
   font-family: var(--monospace);
+  text-spacing-trim: space-all;
 }
 
 :not(pre) > code {
